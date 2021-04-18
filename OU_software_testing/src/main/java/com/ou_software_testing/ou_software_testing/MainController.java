@@ -9,15 +9,20 @@ import javafx.stage.Stage;
 
 public class MainController {
     
-    private Stage stage;
-    private Scene scene;
+    private Stage stage, notifyStage;
+    private Scene scene, notifyScene;
     private String[] name = {
         "sell_menu", 
         "statistic_menu", 
         "products_menu", 
         "search_menu", 
         "login",
-        "main"};
+        "main", 
+        "main_user",
+        "order_list", 
+        "notify_success",
+        "notify_fail"
+    };
     
     @FXML
     private void switchToSellMenu(ActionEvent actionEvent) {
@@ -43,17 +48,66 @@ public class MainController {
     private void switchMain(ActionEvent actionEvent) {
         switchMenu(actionEvent, name[5]);
     }
+    @FXML
+    private void switchMainUser(ActionEvent actionEvent) {
+        switchMenu(actionEvent, name[6]);
+    }
+    @FXML
+    private void switchOrderList(ActionEvent actionEvent) {
+        switchMenu(actionEvent, name[7]);
+    }
+    @FXML
+    private void switchNotifySucess(ActionEvent actionEvent) {
+        switchMenu(actionEvent, name[8]);
+    }
+    @FXML
+    private void switchNotifyFail(ActionEvent actionEvent) {
+        switchMenu(actionEvent, name[9]);
+    }
     
     private void switchMenu(ActionEvent actionEvent, String name) {
         try {
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(App.loadFXML(name));
             stage.setScene(scene);
+            stage.setTitle("Ứng dụng bán hàng");
             stage.hide();
             stage.show();
         } catch (IOException ex) {
             System.out.println("Error while switching to" + name);
             ex.printStackTrace();
         }
+    }
+    
+    //need to check which user it is to switch to the correct menu
+    @FXML 
+    private void returnToWhichMainMenu() {
+        
+    }
+    
+    @FXML
+    private void getNotifyMenu(boolean success) {
+        notifyStage = new Stage();
+        notifyStage.setAlwaysOnTop(true);
+        notifyStage.setResizable(false);
+        notifyStage.setTitle("Notify");
+        
+        try {
+            if(success) {
+                notifyScene = new Scene(App.loadFXML("notify_success_menu"));
+            } else {
+                notifyScene = new Scene(App.loadFXML("notify_fail_menu"));
+            }
+        } catch (IOException ex) {
+            System.out.println("Error while switching to notify menu");
+            ex.printStackTrace();
+        } 
+        
+        notifyStage.setScene(notifyScene);
+        notifyStage.show();
+    }
+    @FXML
+    private void closeNotifyMenu() {
+        notifyStage.hide();
     }
 }
