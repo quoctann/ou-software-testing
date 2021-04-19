@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
--- Host: localhost    Database: saleapp
+-- Host: localhost    Database: saledb
 -- ------------------------------------------------------
--- Server version	8.0.23
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -153,9 +153,13 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'DÅ©ng','male','Tp. Ho Chi Minh','123456789','dung@gmail.com','123'),(2,'Háº­u','male','TÃ¢y NguyÃªn','12345678','hau@gmail.com','456'),(3,'Alex','female','USA','8465655123','alex5@gmail.com','789'),(4,'Grant','male','India','6515661565','grant.ou@gmail.com','111');
+INSERT INTO `user` VALUES (1,'Dũng','male','Tp. Ho Chi Minh','123456789','dung@gmail.com','123'),(2,'Hậu','male','Tây Nguyên','12345678','hau@gmail.com','456'),(3,'Alex','female','USA','8465655123','alex5@gmail.com','789'),(4,'Grant','male','India','6515661565','grant.ou@gmail.com','111');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'saledb'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -166,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-19 18:48:52
+-- Dump completed on 2021-04-19 20:28:43
