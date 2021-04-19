@@ -53,7 +53,7 @@ CREATE TABLE `order_detail` (
   `day_time` datetime NOT NULL,
   `payment_method` int NOT NULL,
   `price` decimal(19,2) DEFAULT NULL,
-  `connt` int DEFAULT '1',
+  `count` int DEFAULT '1',
   PRIMARY KEY (`product_id`,`user_id`),
   KEY `fk_customer_id_idx` (`user_id`),
   KEY `fk_payment_id_idx` (`payment_method`),
@@ -143,6 +143,7 @@ CREATE TABLE `user` (
   `phone` varchar(12) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `role` enum('user','staff','manager') COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -153,7 +154,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Dũng','male','Tp. Ho Chi Minh','123456789','dung@gmail.com','123'),(2,'Hậu','male','Tây Nguyên','12345678','hau@gmail.com','456'),(3,'Alex','female','USA','8465655123','alex5@gmail.com','789'),(4,'Grant','male','India','6515661565','grant.ou@gmail.com','111');
+INSERT INTO `user` VALUES (1,'Dũng','male','Tp. Ho Chi Minh','1234567895','dung@gmail.com','123','manager'),(2,'Hậu','male','Tây Nguyên','1234567855','hau@gmail.com','456','manager'),(3,'Alex','female','USA','8465655123','alex5@gmail.com','789','user'),(4,'Grant','male','India','6515661565','grant.ou@gmail.com','111','user'),(5,'admin','male','Russia','5655665655','admin@gmail.com','123456','manager'),(6,'staff','female','Russia','6565487897','staff@gmail.com','123456','staff');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-19 20:28:43
+-- Dump completed on 2021-04-19 21:25:57
