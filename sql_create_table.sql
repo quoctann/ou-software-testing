@@ -55,11 +55,11 @@ CREATE TABLE `order_detail` (
   `price` decimal(19,2) DEFAULT NULL,
   `count` int DEFAULT '1',
   PRIMARY KEY (`product_id`,`user_id`),
-  KEY `fk_customer_id_idx` (`user_id`),
   KEY `fk_payment_id_idx` (`payment_method`),
-  CONSTRAINT `fk_customer_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  KEY `fk_user_id_idx` (`user_id`),
   CONSTRAINT `fk_payment_id` FOREIGN KEY (`payment_method`) REFERENCES `payment_method` (`id`),
-  CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+  CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `sex` enum('male','female','orther') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `location` varchar(450) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `user` (
   `password` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `role` enum('user','staff','manager') COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-19 21:25:57
+-- Dump completed on 2021-04-20 14:45:49

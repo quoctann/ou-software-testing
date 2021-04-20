@@ -23,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-public class SellMenuController extends Controller implements Initializable{
+public class SellMenuController extends Controller{
     @FXML private TextField txt_pid;
     @FXML private TextField txt_quantity;
     @FXML private Button btn_add_adjust;
@@ -90,9 +90,10 @@ public class SellMenuController extends Controller implements Initializable{
     private void loadProducts(){
         tbProductSelection.setItems(FXCollections.observableArrayList(this.listProduct.getListProduct()));
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        super.initialize(url, rb);
         loadColumns();
         loadProducts();
         

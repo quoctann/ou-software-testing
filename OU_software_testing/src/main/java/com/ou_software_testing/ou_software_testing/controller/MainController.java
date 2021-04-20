@@ -25,7 +25,7 @@ public class MainController extends Controller{
     };
     
     @FXML
-    private void switchToSellMenu(ActionEvent actionEvent) throws IOException {       
+    private void switchToSellMenu(ActionEvent actionEvent) {       
         switchMenu(actionEvent, name[0]);
     }
     @FXML
@@ -67,7 +67,7 @@ public class MainController extends Controller{
     
     private void switchMenu(ActionEvent actionEvent, String name) {
         try {
-            App.setRoot(name);
+            App.setRoot(name, "Ứng dụng bán hàng");
 
         } catch (IOException ex) {
             System.out.println("Error while switching to " + name);
@@ -76,7 +76,7 @@ public class MainController extends Controller{
     }
     
     //need to check which user it is to switch to the correct menu
-    @FXML 
+    @FXML
     private void returnToWhichMainMenu() {
         
     }

@@ -7,6 +7,8 @@ package com.ou_software_testing.ou_software_testing.services;
 
 import com.ou_software_testing.ou_software_testing.pojo.User;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Admin
@@ -38,5 +40,29 @@ public class UserServices {
         }  
         
         return u;
+    }
+    
+    public boolean addUserInfo(String name, String sex, String location, 
+            String phone, String email, String password)  {
+        
+        try {
+            String sql = "Insert into saledb.user (name, sex, location, phone, email, password, role) "
+                    + "values (?, ?, ?, ?, ?, ?, 'user');";
+            PreparedStatement stm = this.conn.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, sex);
+            stm.setString(3, location);
+            stm.setString(4, phone);
+            stm.setString(5, email);
+            stm.setString(6, password);
+            
+            int rs = stm.executeUpdate();
+            
+            return rs > 0;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
