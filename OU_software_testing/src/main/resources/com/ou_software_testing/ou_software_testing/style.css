@@ -27,7 +27,7 @@
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
 }
-.table-row-cell: hover {
+.table-row-cell:hover {
     -fx-background-color: #F2E5D7;
     -fx-text-background-color: white;
 }

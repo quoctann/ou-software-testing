@@ -12,10 +12,15 @@ import java.math.BigDecimal;
  * @author Admin
  */
 public class Product {
-    private String name, category, origin, size;
-    private int count, id;
+    private String name, origin, size;
+    private int count, id, category;
     private BigDecimal price;
 
+    @Override
+    public String toString() {
+        return String.format("product: name:%s origin:%s", name, origin); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     /**
      * @return the name
      */
@@ -30,19 +35,7 @@ public class Product {
         this.name = name;
     }
 
-    /**
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
+    
 
     /**
      * @return the origin
@@ -112,5 +105,19 @@ public class Product {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the category
+     */
+    public int getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(int category) {
+        this.category = category;
     }
 }

@@ -154,7 +154,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Dũng','male','Tp. Ho Chi Minh','1234567895','dung@gmail.com','123','manager'),(2,'Hậu','male','Tây Nguyên','1234567855','hau@gmail.com','456','manager'),(3,'Alex','female','USA','8465655123','alex5@gmail.com','789','user'),(4,'Grant','male','India','6515661565','grant.ou@gmail.com','111','user'),(5,'admin','male','Russia','5655665655','admin@gmail.com','123456','manager'),(6,'staff','female','Russia','6565487897','staff@gmail.com','123456','staff');
+INSERT INTO `user` VALUES (1,'Dũng','male','Tp. Ho Chi Minh','1234567895','dung@gmail.com','123','manager'),(2,'Hậu','male','Tây Nguyên','1234567891','hau@gmail.com','123','manager'),(3,'Alex','female','USA','8465655123','alex5@gmail.com','789','user'),(4,'Grant','male','India','6515661565','grant.ou@gmail.com','111','user'),(5,'admin','male','Russia','5655665655','admin@gmail.com','123456','manager'),(6,'staff','female','Russia','6565487897','staff@gmail.com','123456','staff');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

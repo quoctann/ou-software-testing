@@ -15,15 +15,14 @@ import java.util.logging.Logger;
  */
 public class JdbcServices {
     //Change the comment to your password and leave the first line
-    private static String[] info = {"root", "123456"};    
-//    private String[] Info = {"root", "123456"}; //<- change ur password here Hậu
+    private static String[] info = {"root", "123456"};
 
     
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
-            System.out.println("Error while getting mysql driver");
+            System.out.println(ex);
 //            ex.printStackTrace();
         }
     }
@@ -31,7 +30,7 @@ public class JdbcServices {
         try {
             return DriverManager.getConnection("jdbc:mysql://localhost/saledb", info[0], info[1]);
         } catch (SQLException ex) {
-            System.out.println("Error while connecting mysql server");
+            System.out.println(ex);
 //            Logger.getLogger(JdbcServices.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

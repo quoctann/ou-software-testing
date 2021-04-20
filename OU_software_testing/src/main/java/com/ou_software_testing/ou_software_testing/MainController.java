@@ -4,18 +4,20 @@ import com.ou_software_testing.ou_software_testing.pojo.User;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MainController {
+public class MainController extends Controller{
     
-    @FXML private Text txt_name;
+//    @FXML private Text txt_name;
     
-    private Stage stage, notifyStage;
-    private Scene scene, notifyScene;
-    private User user;
+    private Stage notifyStage;
+    private Scene notifyScene;
+//    private User user;
     private String[] name = {
         "sell_menu", 
         "statistic_menu", 
@@ -73,14 +75,23 @@ public class MainController {
     private void switchMenu(ActionEvent actionEvent, String name) {
         try {
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            scene = new Scene(App.loadFXML(name));
+        
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(name + ".fxml"));
+            scene = new Scene(loader.load());
+            
+            if (!"login".equals(name)){                
+                Controller mainController = loader.getController();
+                mainController.setUser(user);
+            }
+            
             stage.setScene(scene);
             stage.setTitle("Ứng dụng bán hàng");
             stage.hide();
             stage.show();
         } catch (IOException ex) {
-            System.out.println("Error while switching to" + name);
-            ex.printStackTrace();
+            System.out.println("Error while switching to " + name);
+            System.err.println(ex);
+//            ex.printStackTrace();
         }
     }
     
@@ -114,10 +125,5 @@ public class MainController {
     @FXML
     private void closeNotifyMenu() {
         notifyStage.hide();
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-        txt_name.setText(user.getRole() + ": " + user.getName());
     }
 }
