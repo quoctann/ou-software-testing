@@ -25,20 +25,18 @@ public class UserServices {
         stm.setString(2, info);
         stm.setString(3, pw);
 
-        
-        ResultSet rs = stm.executeQuery();
         User u = new User();
-        if(rs.next()) {
-            while (rs.next()) {
-                u.setId(rs.getInt("id"));
-                u.setName(rs.getString("name"));
-                u.setEmail(rs.getString("email"));
-                u.setLocation(rs.getString("location"));
-                u.setPhone(rs.getString("phone"));
-                u.setSex(rs.getString("sex"));
-                u.setRole(rs.getString("role"));
-            } 
-        } 
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            u.setId(rs.getInt("id"));
+            u.setName(rs.getString("name"));
+            u.setEmail(rs.getString("email"));
+            u.setLocation(rs.getString("location"));
+            u.setPhone(rs.getString("phone"));
+            u.setSex(rs.getString("sex"));
+            u.setRole(rs.getObject("role").toString());
+        }  
+        
         return u;
     }
 }

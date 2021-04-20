@@ -21,7 +21,7 @@ public class App extends Application {
         this.stage = stage;
         scene = new Scene(loadFXML("login"));        
 //        scene = new Scene(loadFXML("main_user"));
-
+        stage.setTitle("Sale app");
         this.stage.setScene(scene);
         this.stage.setResizable(false);
         this.stage.hide();

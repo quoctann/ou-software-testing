@@ -1,16 +1,21 @@
 package com.ou_software_testing.ou_software_testing;
 
+import com.ou_software_testing.ou_software_testing.pojo.User;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MainController {
     
+    @FXML private Text txt_name;
+    
     private Stage stage, notifyStage;
     private Scene scene, notifyScene;
+    private User user;
     private String[] name = {
         "sell_menu", 
         "statistic_menu", 
@@ -109,5 +114,10 @@ public class MainController {
     @FXML
     private void closeNotifyMenu() {
         notifyStage.hide();
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+        txt_name.setText(user.getRole() + ": " + user.getName());
     }
 }
