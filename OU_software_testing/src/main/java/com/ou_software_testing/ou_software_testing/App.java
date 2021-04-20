@@ -12,7 +12,6 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    
     private static Scene scene;
     private Stage stage;
 
@@ -22,12 +21,16 @@ public class App extends Application {
         scene = new Scene(loadFXML("login"));        
         stage.setTitle("Sale app");
         this.stage.setScene(scene);
-        this.stage.setResizable(false);
+        this.stage.setResizable(true);
         this.stage.hide();
         this.stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+    }
+    
+    public static void setRoot(String fxml, String title) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -40,5 +43,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

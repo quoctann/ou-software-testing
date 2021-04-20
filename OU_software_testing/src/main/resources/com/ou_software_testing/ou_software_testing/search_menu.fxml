@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="480.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ou_software_testing.ou_software_testing.MainController">
+<GridPane prefHeight="480.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ou_software_testing.ou_software_testing.controller.MainController">
    <columnConstraints>
       <ColumnConstraints maxWidth="130.0" minWidth="57.0" percentWidth="15.0" prefWidth="80.0" />
       <ColumnConstraints maxWidth="250.0" minWidth="63.0" percentWidth="35.0" prefWidth="260.0" />

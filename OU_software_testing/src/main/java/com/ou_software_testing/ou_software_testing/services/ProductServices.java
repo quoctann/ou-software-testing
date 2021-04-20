@@ -29,6 +29,9 @@ public class ProductServices {
 
         Product p = new Product();
         ResultSet rs = stm.executeQuery();
+        if (!rs.isBeforeFirst() ) {    
+            return null;
+        } 
         if (rs.next()) {            
             p.setId(rs.getInt("id"));
             p.setName(rs.getString("name"));

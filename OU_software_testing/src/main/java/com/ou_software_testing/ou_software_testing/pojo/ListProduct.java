@@ -27,7 +27,7 @@ public class ListProduct {
         BigDecimal totalPrice = new BigDecimal(0);
         
         for (Product p : this.getListProduct()) {
-            totalPrice.add(p.getPrice());
+            totalPrice = totalPrice.add(p.getPrice().multiply(new BigDecimal(p.getCount())));
         };
         
         return totalPrice;
