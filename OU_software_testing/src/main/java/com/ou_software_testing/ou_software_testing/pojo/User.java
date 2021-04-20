@@ -12,6 +12,19 @@ package com.ou_software_testing.ou_software_testing.pojo;
 public class User {
     private String name, location, phone, email, sex, role;
     private int id;
+
+    public User(String name, String location, String phone, String email, String sex, String role, int id) {
+        this.name = name;
+        this.location = location;
+        this.phone = phone;
+        this.email = email;
+        this.sex = sex;
+        this.role = role;
+        this.id = id;
+    }
+
+    public User() {
+    }
     
     
 
