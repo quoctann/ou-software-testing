@@ -2,6 +2,7 @@ package com.ou_software_testing.ou_software_testing.controller;
 
 import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
+import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.User;
 import com.ou_software_testing.ou_software_testing.services.JdbcServices;
 import com.ou_software_testing.ou_software_testing.services.UserServices;
@@ -9,8 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,11 +17,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -39,8 +33,6 @@ public class LoginController extends Controller{
     private User user;
     private String info, pw;
 
-//    private Stage stage;
-//    private Scene scene;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {}
@@ -60,11 +52,6 @@ public class LoginController extends Controller{
     @FXML 
     private void switchToRegister(ActionEvent actionEvent) throws IOException {
         App.setRoot("register");
-//        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-//        scene = new Scene(App.loadFXML("register"));
-//        stage.setScene(scene);
-//        stage.hide();
-//        stage.show();
     }
     
     @FXML
@@ -101,37 +88,29 @@ public class LoginController extends Controller{
         String location = txt_location.getText();
         String phone = txt_phone.getText();
         String sex = cb_sex.getValue();
-        if(txt_password.getText().length() != 0 
-                && txt_phone.getText().length() != 0
-                && txt_email.getText().length() != 0
-                && txt_user_name.getText().length() != 0
-                && txt_location.getText().length() != 0) {       
-              
-              try {
-                    Connection conn = JdbcServices.getConnection();
-                    UserServices userServices = new UserServices(conn);
-                    
-                    boolean kq = userServices.addUserInfo(name,sex,location,phone,email,password);
-                    if(kq) {
-                        user = userServices.getUserInfo(phone, password);
-                        switchToMain(actionEvent);
-                        Alert a = new Alert(Alert.AlertType.INFORMATION);
-                        a.setHeaderText("Đăng ký thành công");
-                        a.setTitle("Success");
-                        a.setContentText("Thành công");
-                        a.show();
-                    } else {
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("Sai thông tin");
-                        a.setTitle("Dialog");
-                        a.setContentText("Sai thông tin người dùng, vui lòng nhập đầy đủ");
-                        a.show();
-                    }
+        
+        if(Utils.checkInfor(password, phone, email, name, location)) {
+            try {
+                Connection conn = JdbcServices.getConnection();
+                UserServices userServices = new UserServices(conn);
 
+                boolean kq = userServices.addUserInfo(name,sex,location,phone,email,password);
+                if(kq) {
+                    user = userServices.getUserInfo(phone, password);
+                    GlobalContext.setUser(user);
+                    switchToMain(actionEvent);
 
-                } catch (Exception ex) {
-                    System.err.println(ex);
+                    Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Đăng ký thành công"
+                            , "Success", "Thành công");
+                    a.show();
                 }
+            } catch (IOException | SQLException ex) {
+                System.err.println(ex);
+            }
+        } else {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Sai thông tin", "Dialog"
+                    , "Sai thông tin người dùng, vui lòng nhập đầy đủ");
+            a.show();
         }
     }
 }
