@@ -2,6 +2,8 @@ package com.ou_software_testing.ou_software_testing.controller;
 
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.App;
+import com.ou_software_testing.ou_software_testing.GlobalContext;
+import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import com.ou_software_testing.ou_software_testing.services.JdbcServices;
@@ -11,17 +13,22 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
 public class SellMenuController extends Controller{
     @FXML private TextField txt_pid;
@@ -56,10 +63,12 @@ public class SellMenuController extends Controller{
             ProductServices productServices = new ProductServices(conn);
 
             Product product = productServices.getProductById(Integer.parseInt(pid));
-            if (product == null) return;
+            if (product == null) 
+                return;
             
             product.setCount(Integer.parseInt(txt_quantity.getText()));
             
+            listProduct.removeProductById(product.getId());
             listProduct.addProduct(product);
             loadProducts();
             
@@ -84,7 +93,25 @@ public class SellMenuController extends Controller{
         TableColumn colPrice = new TableColumn("Price");
         colPrice.setCellValueFactory(new PropertyValueFactory("price"));
         
-        this.tbProductSelection.getColumns().addAll(colId, colName, colQuantity, colPrice);
+        TableColumn colAction = new TableColumn("Action");
+        colAction.setCellFactory((obj) -> {
+            Button btn = new Button("DELETE");
+            btn.setOnAction(evt -> {
+                TableCell cell = (TableCell) ((Button) evt.getSource()).getParent();
+                Product p = (Product) cell.getTableRow().getItem();
+                listProduct.removeProductById(p.getId());
+                
+                loadProducts();
+                txt_sum.setText(listProduct.getTotalPrice().toString());
+            });
+            
+            TableCell cell = new TableCell();
+            cell.setGraphic(btn);
+            return cell;
+        });
+        
+        
+        this.tbProductSelection.getColumns().addAll(colId, colName, colQuantity, colPrice, colAction);
     }
     
     private void loadProducts(){
@@ -99,7 +126,7 @@ public class SellMenuController extends Controller{
         
         tbProductSelection.setOnMouseClicked(event -> {
             Product p = tbProductSelection.getSelectionModel().getSelectedItem();
-
+            
             txt_quantity.setText(String.valueOf(p.getCount()));
             txt_pid.setText(String.valueOf(p.getId()));
         });

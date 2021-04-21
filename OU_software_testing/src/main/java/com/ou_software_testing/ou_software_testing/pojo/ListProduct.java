@@ -36,7 +36,20 @@ public class ListProduct {
         if (listProduct == null) listProduct = new ArrayList<>();
         this.listProduct.add(p);
     }
-
+    
+    public void removeProductById(int id){
+        int index = 0;
+        
+        for (Product p: listProduct){
+            if (p.getId() == id){
+                this.listProduct.remove(index);
+                break;
+            }
+            index++;
+        }
+        
+        
+    }
     /**
      * @return the listProduct
      */

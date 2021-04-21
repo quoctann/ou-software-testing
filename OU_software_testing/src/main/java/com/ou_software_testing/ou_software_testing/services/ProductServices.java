@@ -21,7 +21,9 @@ public class ProductServices {
     public ProductServices(Connection conn) {
         this.conn = conn;
     }
-    
+    public boolean deleleProduct(int id){
+        return true;
+    }
     public Product getProductById (int productId) throws SQLException {
         String sql = "SELECT * FROM product WHERE id = ?";
         PreparedStatement stm = this.conn.prepareStatement(sql);

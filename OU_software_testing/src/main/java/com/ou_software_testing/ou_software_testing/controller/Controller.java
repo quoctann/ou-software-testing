@@ -24,9 +24,9 @@ public class Controller implements Initializable{
             App.setRoot("main");
         }
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txt_name.setText(GlobalContext.getUser().getName());
+        txt_name.setText(GlobalContext.getUser().getRole()+ ": " +GlobalContext.getUser().getName());
     }
 }

@@ -27,8 +27,12 @@ public class UserServices {
         stm.setString(2, info);
         stm.setString(3, pw);
 
-        User u = new User();
         ResultSet rs = stm.executeQuery();
+        if (!rs.isBeforeFirst() ) {    
+            return null;
+        } 
+        
+        User u = new User();
         if (rs.next()) {
             u.setId(rs.getInt("id"));
             u.setName(rs.getString("name"));
