@@ -31,7 +31,7 @@ public class SellMenuController extends Controller{
     @FXML private Text txt_sum;
     @FXML private TableView<Product> tbProductSelection;
     
-    private ListProduct listProduct = new ListProduct();
+    private ListProduct listProduct = DataTemporary.getListProductSelection();
     private String pid, quantity;
 
     @FXML 

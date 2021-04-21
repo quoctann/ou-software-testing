@@ -20,6 +20,9 @@ public class DataTemporary {
      * @return the listProductSelection
      */
     public static ListProduct getListProductSelection() {
+        if (listProductSelection == null){
+            listProductSelection = new ListProduct();
+        }
         return listProductSelection;
     }
 

@@ -67,7 +67,6 @@ public class MainController extends Controller{
     private void switchMenu(ActionEvent actionEvent, String name) {
         try {
             App.setRoot(name);
-
         } catch (IOException ex) {
             System.out.println("Error while switching to " + name);
             System.err.println(ex);

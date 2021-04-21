@@ -37,6 +37,10 @@ public class ListProduct {
         this.listProduct.add(p);
     }
     
+    public void concatList(ListProduct list){
+        this.listProduct.addAll(list.getListProduct());
+    }
+    
     public void removeProductById(int id){
         int index = 0;
         
