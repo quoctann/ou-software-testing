@@ -12,32 +12,18 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
-    /**
-     * @return the stage
-     */
-    public Stage getStage() {
-        return stage;
-    }
-
-    /**
-     * @param stage the stage to set
-     */
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
     private static Scene scene;
     private Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.setStage(stage);
+        this.stage = stage;
         scene = new Scene(loadFXML("login"));        
         stage.setTitle("Sale app");
-        this.getStage().setScene(scene);
-        this.getStage().setResizable(true);
-        this.getStage().hide();
-        this.getStage().show();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.hide();
+        stage.show();
     }
 
     public static void setRoot(String fxml) throws IOException {

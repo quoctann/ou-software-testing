@@ -1,6 +1,5 @@
 package com.ou_software_testing.ou_software_testing.controller;
 
-import com.ou_software_testing.ou_software_testing.GlobalContext;
 import com.ou_software_testing.ou_software_testing.App;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -67,7 +66,7 @@ public class MainController extends Controller{
     
     private void switchMenu(ActionEvent actionEvent, String name) {
         try {
-            App.setRoot(name, "Ứng dụng bán hàng");
+            App.setRoot(name);
 
         } catch (IOException ex) {
             System.out.println("Error while switching to " + name);

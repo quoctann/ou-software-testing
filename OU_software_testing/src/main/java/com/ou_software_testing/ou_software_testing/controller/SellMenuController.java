@@ -2,8 +2,6 @@ package com.ou_software_testing.ou_software_testing.controller;
 
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.App;
-import com.ou_software_testing.ou_software_testing.GlobalContext;
-import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import com.ou_software_testing.ou_software_testing.services.JdbcServices;
@@ -13,22 +11,16 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 public class SellMenuController extends Controller{
     @FXML private TextField txt_pid;
