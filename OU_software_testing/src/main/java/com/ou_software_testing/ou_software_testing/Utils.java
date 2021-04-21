@@ -23,6 +23,12 @@ public class Utils {
         return a;
     };
     
+    public static Alert makeAlert(Alert.AlertType type, String content) {
+        Alert a = new Alert(type);
+        a.setContentText(content);
+        return a;
+    };
+    
     public static boolean checkInfor(String txt_password, String txt_phone
             , String txt_email, String txt_user_name, String txt_location) {
         return txt_password.length() != 0 

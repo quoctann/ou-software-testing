@@ -1,6 +1,5 @@
 package com.ou_software_testing.ou_software_testing.controller;
 
-import com.ou_software_testing.ou_software_testing.GlobalContext;
 import com.ou_software_testing.ou_software_testing.App;
 import java.io.IOException;
 import javafx.event.ActionEvent;
