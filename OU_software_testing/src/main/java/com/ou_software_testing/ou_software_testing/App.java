@@ -20,10 +20,10 @@ public class App extends Application {
         this.stage = stage;
         scene = new Scene(loadFXML("login"));        
         stage.setTitle("Sale app");
-        this.stage.setScene(scene);
-        this.stage.setResizable(true);
-        this.stage.hide();
-        this.stage.show();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.hide();
+        stage.show();
     }
 
     public static void setRoot(String fxml) throws IOException {
