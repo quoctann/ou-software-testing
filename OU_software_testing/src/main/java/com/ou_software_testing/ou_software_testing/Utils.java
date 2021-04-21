@@ -5,6 +5,8 @@
  */
 package com.ou_software_testing.ou_software_testing;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
 
 /**
@@ -30,4 +32,8 @@ public class Utils {
                 && txt_location.length() != 0;
     };
     
+    public static boolean checkValidRegex(Pattern pattern, String text) {
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
+    }
 }

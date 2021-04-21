@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,14 +32,18 @@ public class LoginController extends Controller{
     @FXML private Button btn_login;
     @FXML private ComboBox<String> cb_sex;
     
+    private static final Pattern EMAIL_PATTERN = 
+            Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PHONE_PATTERN = 
+            Pattern.compile("(?:[0-9] ?){9,13}[0-9]", Pattern.CASE_INSENSITIVE);
     private User user;
     private String info, pw;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {}
-    
-    
+     
+        
         
     @FXML
     private void loadgenderList() {
@@ -52,6 +58,10 @@ public class LoginController extends Controller{
     @FXML 
     private void switchToRegister(ActionEvent actionEvent) throws IOException {
         App.setRoot("register");
+    }
+    @FXML 
+    private void switchToLogin(ActionEvent actionEvent) throws IOException {
+        App.setRoot("login");
     }
     
     @FXML
@@ -68,10 +78,9 @@ public class LoginController extends Controller{
                         GlobalContext.setUser(user);
                         this.switchToMain(actionEvent);
                     } else {
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("Sai thông tin");
-                        a.setTitle("Dialog");
-                        a.setContentText("Sai mật khẩu hoặc tài khoản người dùng");
+                        Alert a = Utils.makeAlert(Alert.AlertType.ERROR, 
+                                "Sai thông tin", "Dialog", 
+                                "Sai mật khẩu hoặc tài khoản người dùng");
                         a.show();
                     }
                 } catch (IOException | SQLException ex) {
@@ -81,7 +90,7 @@ public class LoginController extends Controller{
     }
 
     @FXML 
-    private void registerLoginInfo(ActionEvent actionEvent) {
+    private void registerLoginInfo(ActionEvent actionEvent) {  
         String name = txt_user_name.getText();
         String password = txt_password.getText();
         String email =  txt_email.getText();
@@ -89,7 +98,10 @@ public class LoginController extends Controller{
         String phone = txt_phone.getText();
         String sex = cb_sex.getValue();
         
-        if(Utils.checkInfor(password, phone, email, name, location)) {
+        if(Utils.checkInfor(password, phone, email, name, location) 
+                && Utils.checkValidRegex(PHONE_PATTERN, phone) 
+                && Utils.checkValidRegex(EMAIL_PATTERN, email)
+                && sex != null) {
             try {
                 Connection conn = JdbcServices.getConnection();
                 UserServices userServices = new UserServices(conn);
@@ -107,7 +119,15 @@ public class LoginController extends Controller{
             } catch (IOException | SQLException ex) {
                 System.err.println(ex);
             }
-        } else {
+        } else if(!Utils.checkValidRegex(PHONE_PATTERN, phone)) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Sai thông tin", "Dialog", 
+                    "Sai thông tin số điện thoại(10-13 số), vui lòng nhập lại");
+            a.show();
+        } else if(!Utils.checkValidRegex(EMAIL_PATTERN, email)) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Sai thông tin", "Dialog", 
+                    "Sai thông tin email, vui lòng nhập lại");
+            a.show();
+        } else  {
             Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Sai thông tin", "Dialog"
                     , "Sai thông tin người dùng, vui lòng nhập đầy đủ");
             a.show();
