@@ -25,7 +25,8 @@ public class ProductServices {
         int kq = stm.executeUpdate(sql);
         if (kq == 1) {
             return true;
-        }            
+        }    
+        conn.close();        
         return false;
     }
     
@@ -44,7 +45,8 @@ public class ProductServices {
         
         if (kq == 1) {
             return true;
-        }            
+        }    
+        conn.close();
         return false;
     }
     
@@ -67,7 +69,7 @@ public class ProductServices {
             p.setCategory(rs.getInt("category"));
             p.setPrice(rs.getBigDecimal("price"));
         }  
-        
+        conn.close();
         return p;
     }
     
@@ -97,7 +99,7 @@ public class ProductServices {
             
             listProduct.addProduct(p);
         }
-        
+        conn.close();
         return listProduct;
     }
     
@@ -125,7 +127,7 @@ public class ProductServices {
             
             listProduct.addProduct(p);
         }
-        
+        conn.close();
         return listProduct;
     }
     

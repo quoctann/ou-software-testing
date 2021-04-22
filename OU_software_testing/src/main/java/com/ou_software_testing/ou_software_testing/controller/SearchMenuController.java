@@ -2,12 +2,14 @@ package com.ou_software_testing.ou_software_testing.controller;
 
 import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
+import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 
 
@@ -47,5 +49,13 @@ public class SearchMenuController extends ManageProductTableController{
         });
     }
     
-    
+    //Use for checking order orders success or not.
+    private void getNotify(Boolean success) {
+        if(success) {
+            Utils.makeAlert(Alert.AlertType.INFORMATION, "Order success", 
+                    "Information", "Order successful, please go to order to check list");
+        } else 
+            Utils.makeAlert(Alert.AlertType.ERROR, "Fail ordering ", 
+                    "Error", "Order fail, please check products list");
+    }
 }
