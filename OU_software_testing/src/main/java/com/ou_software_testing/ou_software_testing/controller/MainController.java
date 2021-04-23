@@ -73,11 +73,6 @@ public class MainController extends Controller{
         }
     }
     
-    //need to check which user it is to switch to the correct menu
-    @FXML
-    private void returnToWhichMainMenu() {
-        
-    }
     
     @FXML
     private void getNotifyMenu(boolean success) {
