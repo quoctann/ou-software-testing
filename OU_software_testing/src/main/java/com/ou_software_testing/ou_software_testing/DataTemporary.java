@@ -32,4 +32,10 @@ public class DataTemporary {
     public static void setListProductSelection(ListProduct aListProductSelection) {
         listProductSelection = aListProductSelection;
     }
+    
+    public static void clearListProductSelection() {
+       if(listProductSelection != null) {
+           listProductSelection = null;
+       }
+    }
 }
