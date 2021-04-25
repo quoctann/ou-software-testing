@@ -2,11 +2,13 @@ package com.ou_software_testing.ou_software_testing.services;
 
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ProductServices {
@@ -16,17 +18,50 @@ public class ProductServices {
         this.conn = conn;
     }
     
-    public boolean deleleProductById(int productId) throws SQLException{
-        String sql = "DELETE FROM product WHERE id = ?";
-        PreparedStatement stm = this.conn.prepareStatement(sql);
+    public boolean editProductById(Product p){
+        String sql = "UPDATE product " +
+                    "SET name=?, category=?, origin=?, price=?, size=?, count=? " +
+                    "WHERE id = ?;";
+        PreparedStatement stm;
+        try {
+            stm = this.conn.prepareStatement(sql);
+            
+            stm.setString(1 , p.getName());
+            stm.setString(3 , p.getOrigin());
+            stm.setString(5 , p.getSize());
+            
+            stm.setInt(7, p.getId());
+            stm.setInt(2, p.getCategory());
+            stm.setInt(6, p.getCount());
         
-        stm.setInt(1, productId);
+            stm.setBigDecimal(4, p.getPrice());
+            
+            int kq = stm.executeUpdate();
+            if (kq == 1) {
+                return true;
+            }    
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean deleleProductById(int productId) {
+        String sql = "DELETE FROM product WHERE id = ?;";
+        PreparedStatement stm;
+        try {
+            stm = this.conn.prepareStatement(sql);
+            stm.setInt(1, productId);
         
-        int kq = stm.executeUpdate(sql);
-        if (kq == 1) {
-            return true;
-        }    
-        conn.close();        
+            int kq = stm.executeUpdate();
+            if (kq == 1) {
+                return true;
+            }    
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return false;
     }
     

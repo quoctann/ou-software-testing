@@ -27,10 +27,9 @@ public class ManageProductTableController extends Controller{
     
     protected ListProduct listProduct = new ListProduct();
     
-    @FXML
-    public void onEnter(ActionEvent ae){
+    public void onChangeText(String kw){
         listProduct.getListProduct().clear();
-        filterProductsByKeyword(txt_search_keyword.getText());
+        filterProductsByKeyword(kw);
         loadProducts();
     }
     
@@ -59,6 +58,9 @@ public class ManageProductTableController extends Controller{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
+        txt_search_keyword.textProperty().addListener((observable, oldValue, newValue) -> {
+            onChangeText(newValue);
+        });  
         loadColumns();
         loadProducts();
     }
