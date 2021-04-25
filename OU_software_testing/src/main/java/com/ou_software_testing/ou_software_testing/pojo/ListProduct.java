@@ -32,6 +32,7 @@ public class ListProduct {
         
         return totalPrice;
     }
+    
     public void addProduct(Product p){
         if (listProduct == null) listProduct = new ArrayList<>();
         this.listProduct.add(p);
@@ -53,6 +54,12 @@ public class ListProduct {
         }
         
         
+    }
+    
+    public void setCount1(){
+        for (Product p: listProduct){
+            p.setCount(1);
+        }
     }
     /**
      * @return the listProduct

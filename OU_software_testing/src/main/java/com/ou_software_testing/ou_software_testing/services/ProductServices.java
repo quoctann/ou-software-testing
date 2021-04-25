@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ProductServices {
@@ -16,17 +18,21 @@ public class ProductServices {
         this.conn = conn;
     }
     
-    public boolean deleleProductById(int productId) throws SQLException{
-        String sql = "DELETE FROM product WHERE id = ?";
-        PreparedStatement stm = this.conn.prepareStatement(sql);
+    public boolean deleleProductById(int productId){
+        String sql = "DELETE FROM product WHERE id = ?;";
+        PreparedStatement stm;
+        try {
+            stm = this.conn.prepareStatement(sql);
+            stm.setInt(1, productId);
         
-        stm.setInt(1, productId);
-        
-        int kq = stm.executeUpdate(sql);
-        if (kq == 1) {
-            return true;
-        }    
-        conn.close();        
+            int kq = stm.executeUpdate();
+            if (kq == 1) {
+                return true;
+            }    
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return false;
     }
     
