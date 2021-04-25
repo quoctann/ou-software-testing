@@ -1,6 +1,7 @@
 package com.ou_software_testing.ou_software_testing.controller;
 
 import com.ou_software_testing.ou_software_testing.App;
+import com.ou_software_testing.ou_software_testing.DataTemporary;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,8 +40,10 @@ public class MainController extends Controller{
     private void switchToSearchMenu(ActionEvent actionEvent) {
         switchMenu(actionEvent, name[3]);
     }
+    //Chuyển sang login thì clear list những sản phẩm đã chọn để chuyển sang user khác.
     @FXML
     private void switchToLogin(ActionEvent actionEvent){
+        DataTemporary.clearListProductSelection();
         switchMenu(actionEvent, name[4]);
     }
     @FXML
@@ -73,11 +76,6 @@ public class MainController extends Controller{
         }
     }
     
-    //need to check which user it is to switch to the correct menu
-    @FXML
-    private void returnToWhichMainMenu() {
-        
-    }
     
     @FXML
     private void getNotifyMenu(boolean success) {
