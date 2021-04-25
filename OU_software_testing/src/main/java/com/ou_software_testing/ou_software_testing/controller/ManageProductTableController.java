@@ -56,6 +56,24 @@ public class ManageProductTableController extends Controller{
         }
     }
     
+    //sử dụng trong order menu controller
+    protected Product getProductByID(int id) {
+        Connection conn = JdbcServices.getConnection();
+        ProductServices productServices = new ProductServices(conn);
+        try {
+            
+            Product p = productServices.getProductById(id);
+            if(p != null) {
+                return p;
+            }
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+        return null;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb);
@@ -82,7 +100,27 @@ public class ManageProductTableController extends Controller{
         tb_search_product.getColumns().addAll(colId, colName, colQuantity, colPrice);
     }
     
+    protected void loadColumns(TableView tableView) {
+        TableColumn colId = new TableColumn("PID");
+        colId.setCellValueFactory(new PropertyValueFactory("id"));
+
+        TableColumn colName = new TableColumn("Name");
+        colName.setCellValueFactory(new PropertyValueFactory("name"));
+        
+        TableColumn colQuantity = new TableColumn("Quantity");
+        colQuantity.setCellValueFactory(new PropertyValueFactory("count"));
+        
+        TableColumn colPrice = new TableColumn("Price");
+        colPrice.setCellValueFactory(new PropertyValueFactory("price"));
+        
+        tableView.getColumns().addAll(colId, colName, colQuantity, colPrice);
+    }
+    
     protected void loadProducts(){
         tb_search_product.setItems(FXCollections.observableArrayList(this.listProduct.getListProduct()));
+    }
+    
+    protected void loadProducts(TableView tableView, ListProduct listProduct){
+        tableView.setItems(FXCollections.observableArrayList(listProduct.getListProduct()));
     }
 }

@@ -32,10 +32,10 @@ public class ListProduct {
         
         return totalPrice;
     }
-    
-    public void addProduct(Product p){
+    public boolean addProduct(Product p){
         if (listProduct == null) listProduct = new ArrayList<>();
-        this.listProduct.add(p);
+        boolean rs = this.listProduct.add(p);
+        return rs;
     }
     
     public void concatList(ListProduct list){
@@ -52,8 +52,6 @@ public class ListProduct {
             }
             index++;
         }
-        
-        
     }
     
     public void setCount1(){

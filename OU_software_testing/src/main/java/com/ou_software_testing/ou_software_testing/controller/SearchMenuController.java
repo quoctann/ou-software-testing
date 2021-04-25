@@ -2,12 +2,17 @@ package com.ou_software_testing.ou_software_testing.controller;
 
 import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
+import com.ou_software_testing.ou_software_testing.GlobalContext;
 import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +20,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TablePosition;
 import javafx.scene.input.MouseEvent;
@@ -28,9 +35,11 @@ import javafx.scene.text.Text;
 public class SearchMenuController extends ManageProductTableController{
     @FXML protected Text txt_product_name;
     @FXML protected Text txt_pid;
-    @FXML protected Text txt_quantity;
+    @FXML protected TextField txt_quantity;
     @FXML protected Text txt_price;
+    @FXML protected Text txt_product_category;
     
+    private ListProduct listProductsOrders = DataTemporary.getListProductSelection();
     private ListProduct listChoose = new ListProduct();
     ObservableList<TablePosition> selectedCells = FXCollections.observableArrayList();
     
@@ -74,13 +83,68 @@ public class SearchMenuController extends ManageProductTableController{
         });
     }
     
+    @FXML 
+    private void addProductsInProductsList() {
+        Product p = tb_search_product.getSelectionModel().getSelectedItem();
+        int count = 0;
+        try {
+            count = Integer.parseInt(txt_quantity.getText());
+        } catch(Exception ex) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
+                    "Nhập sai thông tin số lượng", "Vui lòng nhập lại thông tin số lượng đúng định dang số");
+            a.show();
+            return;
+        }
+        if( count > p.getCount() || count <= 0 )  {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
+                    "Nhập sai thông tin số lượng", "Vui lòng nhập lại thông tin số lượng đúng");
+            a.show();
+            return;
+        }
+        
+        boolean rs  = false;
+        p.setCount(count);
+        if(listProductsOrders.getListProduct().size() <= 0) {
+            rs = listProductsOrders.addProduct(p);
+            getNotify(rs);
+        } else { 
+            for (Product pro: listProductsOrders.getListProduct()) {
+                if(pro.getId() == p.getId())  {
+                    pro.setCount(pro.getCount() + count);
+                    getNotify(true);
+                    return;
+                }
+                rs = listProductsOrders.addProduct(p);
+                getNotify(rs);
+            }
+        }
+        
+        
+    }
+    
+    @FXML 
+    private void switchToOrderOrSellMenu() {
+        try {
+            DataTemporary.setListProductSelection(listProductsOrders);
+            if("user".equals(GlobalContext.getUser().getRole())) 
+                App.setRoot("order_list");
+            else 
+                App.setRoot("sell_menu");
+        } catch (IOException ex) {
+            Logger.getLogger(SearchMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     //Use for checking order orders success or not.
     private void getNotify(Boolean success) {
+        Alert a;
         if(success) {
-            Utils.makeAlert(Alert.AlertType.INFORMATION, "Order success", 
+            a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Order success", 
                     "Information", "Order successful, please go to order to check list");
         } else 
-            Utils.makeAlert(Alert.AlertType.ERROR, "Fail ordering ", 
+            a = Utils.makeAlert(Alert.AlertType.ERROR, "Fail ordering ", 
                     "Error", "Order fail, please check products list");
+        
+        a.show();
     }
 }
