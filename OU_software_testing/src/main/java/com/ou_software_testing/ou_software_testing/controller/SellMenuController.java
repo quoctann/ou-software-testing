@@ -42,6 +42,7 @@ public class SellMenuController extends Controller{
     
     @FXML 
     private void HandleAbort(ActionEvent actionEvent) throws IOException{
+        DataTemporary.setListProductSelection(null);
         this.switchToMain(actionEvent);
     }
     
@@ -115,6 +116,8 @@ public class SellMenuController extends Controller{
         super.initialize(url, rb);
         loadColumns();
         loadProducts();
+        
+        txt_sum.setText(listProduct.getTotalPrice().toString());
         
         tbProductSelection.setOnMouseClicked(event -> {
             Product p = tbProductSelection.getSelectionModel().getSelectedItem();

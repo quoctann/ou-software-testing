@@ -53,6 +53,12 @@ public class ListProduct {
             index++;
         }
     }
+    
+    public void setCount1(){
+        for (Product p: listProduct){
+            p.setCount(1);
+        }
+    }
     /**
      * @return the listProduct
      */

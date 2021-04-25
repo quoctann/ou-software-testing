@@ -13,11 +13,18 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TablePosition;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 
@@ -33,18 +40,46 @@ public class SearchMenuController extends ManageProductTableController{
     @FXML protected Text txt_product_category;
     
     private ListProduct listProductsOrders = DataTemporary.getListProductSelection();
+    private ListProduct listChoose = new ListProduct();
+    ObservableList<TablePosition> selectedCells = FXCollections.observableArrayList();
+    
+    @FXML
+    private void switchToSellMenu(ActionEvent actionEvent) throws IOException {
+        try {
+            listChoose.setCount1();
+            DataTemporary.setListProductSelection(listChoose);
+            this.getNotify(true);
+            App.setRoot("sell_menu");
+        } catch (IOException ex) {
+            this.getNotify(false);
+            System.out.println("Error while switching to sell_menu");
+            System.err.println(ex);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb); //To change body of generated methods, choose Tools | Templates.
         
-        tb_search_product.setOnMouseClicked(event -> {
-            Product p = tb_search_product.getSelectionModel().getSelectedItem();  
-            txt_quantity.setText("1");
-            txt_pid.setText(String.valueOf(p.getId()));
-            txt_product_name.setText(p.getName());
-            txt_product_category.setText(String.valueOf(p.getCategory()));
-            txt_price.setText(p.getPrice().toString());
+        tb_search_product.getSelectionModel().setSelectionMode(
+            SelectionMode.MULTIPLE
+        );
+        tb_search_product.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                Product p = tb_search_product.getSelectionModel().getSelectedItem();
+            
+                List<Product> list = tb_search_product.getSelectionModel().getSelectedItems();
+
+                listChoose.getListProduct().clear();
+                for (int i = 0; i < list.size(); i++)
+                    listChoose.addProduct(list.get(i));
+
+                txt_quantity.setText(String.valueOf(p.getCount()));
+                txt_pid.setText(String.valueOf(p.getId()));
+                txt_product_name.setText(p.getName());
+                txt_price.setText(p.getPrice().toString());
+            }
         });
     }
     
