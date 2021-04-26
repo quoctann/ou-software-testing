@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class JdbcServices {
     //Change the comment to your password and leave the first line
-    private static String[] info = {"root", "123456"};
+    private static String[] info = {"root", "P@ssw0rd"};
 
     
     static {
