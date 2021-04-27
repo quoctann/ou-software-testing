@@ -7,11 +7,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<GridPane prefHeight="640.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ou_software_testing.ou_software_testing.controller.MainController">
+<GridPane prefHeight="640.0" prefWidth="840.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ou_software_testing.ou_software_testing.controller.MainController">
    <columnConstraints>
       <ColumnConstraints maxWidth="130.0" minWidth="57.0" percentWidth="15.0" prefWidth="80.0" />
       <ColumnConstraints maxWidth="250.0" minWidth="63.0" percentWidth="35.0" prefWidth="260.0" />
@@ -25,26 +27,24 @@
       <RowConstraints maxHeight="100.0" minHeight="50.0" percentHeight="20.0" prefHeight="85.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quản lý sản phẩm" wrappingWidth="286.634765625" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUẢN LÝ SẢN PHẨM" wrappingWidth="409.634765625" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
          <font>
-            <Font size="32.0" />
+            <Font name="System Bold" size="32.0" />
          </font>
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
-      </Text>
-      <Text fx:id="txt_name" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhân viên: Nguyễn văn A" wrappingWidth="220.560546875" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin>
-         <font>
-            <Font size="18.0" />
-         </font>
       </Text>
       <Button fx:id="btn_return" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchMain" text="Return" GridPane.columnIndex="3" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
          </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+         <graphic>
+            <FontIcon iconLiteral="fas-arrow-left" wrappingWidth="15.0" />
+         </graphic>
       </Button>
       <GridPane GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="3">
         <columnConstraints>
@@ -224,6 +224,9 @@
                            <font>
                               <Font size="18.0" />
                            </font>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-plus-circle" wrappingWidth="20.0" />
+                           </graphic>
                         </Button>
                         <Button fx:id="btn_delete" maxHeight="80.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Xóa" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                            <font>
@@ -232,6 +235,9 @@
                            <GridPane.margin>
                               <Insets bottom="10.0" left="10.0" right="20.0" top="20.0" />
                            </GridPane.margin>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-minus-circle" wrappingWidth="20.0" />
+                           </graphic>
                         </Button>
                         <Button fx:id="btn_confirm_change" maxHeight="80.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Chỉnh sửa" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
@@ -240,6 +246,9 @@
                            <GridPane.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                            </GridPane.margin>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-edit" wrappingWidth="20.0" />
+                           </graphic>
                         </Button>
                      </children>
                   </GridPane>
@@ -250,5 +259,15 @@
             </GridPane>
          </children>
       </GridPane>
+      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+         <children>
+            <Text fx:id="txt_name" layoutX="54.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhân viên: Nguyễn văn A" wrappingWidth="239.560546875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <FontIcon iconLiteral="fas-user" iconSize="18" layoutX="21.0" layoutY="46.0" />
+         </children>
+      </Pane>
    </children>
 </GridPane>
