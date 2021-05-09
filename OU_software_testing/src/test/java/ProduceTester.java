@@ -55,6 +55,7 @@ public class ProduceTester {
         p.setId(1);
         Boolean rs = new ProductServices(conn).editProductById(p);
         Assertions.assertTrue(rs);
+        resetBack();
     }
     //Edit với số lượng > 200 
     @Test
@@ -86,8 +87,15 @@ public class ProduceTester {
     @Test
     public void testCheckUniqueName() {
         Connection conn = JdbcServices.getConnection();
-        p = new Product("ao den","USA","XL",2,1,new BigDecimal("5000"));
+        p = new Product("ao den thui","USA","XL",2,1,new BigDecimal("5000"));
         Boolean rs = new ProductServices(conn).checkUniqueName(p);
         Assertions.assertTrue(rs);
+    }
+
+    private void resetBack() {
+        Connection conn = JdbcServices.getConnection();
+        p = new Product("ao den1","USA","XL",10,1,new BigDecimal("5000"));
+        p.setId(1);
+        Boolean rs = new ProductServices(conn).editProductById(p);
     }
 }

@@ -150,12 +150,46 @@ public class ProductServices {
         return listProduct;
     }
     
+    public ListProduct getAllProduct(boolean closeConnection) throws SQLException{
+        ListProduct listProduct = new ListProduct();
+        
+        String sql = "SELECT * FROM product";
+        
+        PreparedStatement stm = this.conn.prepareStatement(sql);
+        
+        System.out.println(conn);
+        
+        ResultSet rs = stm.executeQuery();
+        if (!rs.isBeforeFirst() ) {    
+            return null;
+        } 
+        while (rs.next()) {            
+            Product p = new Product();
+            
+            p.setId(rs.getInt("id"));
+            p.setName(rs.getString("name"));
+            p.setOrigin(rs.getString("origin"));
+            p.setSize(rs.getString("size"));
+            p.setCount(rs.getInt("count"));
+            p.setCategory(rs.getInt("category"));
+            p.setPrice(rs.getBigDecimal("price"));
+            
+            listProduct.addProduct(p);
+        }
+        if(closeConnection) {
+            conn.close();
+        }
+        return listProduct;
+    }
+    
     public ListProduct getAllProduct() throws SQLException{
         ListProduct listProduct = new ListProduct();
         
         String sql = "SELECT * FROM product";
         
         PreparedStatement stm = this.conn.prepareStatement(sql);
+        
+        System.out.println(conn);
         
         ResultSet rs = stm.executeQuery();
         if (!rs.isBeforeFirst() ) {    
@@ -181,7 +215,8 @@ public class ProductServices {
     public boolean checkUniqueName(Product p) {
         Boolean flag = true;
         try {
-            ListProduct listProduct = getAllProduct();
+            ListProduct listProduct = getAllProduct(false);
+            System.out.println(listProduct.getListProduct().get(0));
             for(Product pro: listProduct.getListProduct()) {
                 if((p.getName()).equals(pro.getName())) {
                     flag = false;
