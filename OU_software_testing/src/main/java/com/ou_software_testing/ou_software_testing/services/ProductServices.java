@@ -2,7 +2,6 @@ package com.ou_software_testing.ou_software_testing.services;
 
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +21,14 @@ public class ProductServices {
         String sql = "UPDATE product " +
                     "SET name=?, category=?, origin=?, price=?, size=?, count=? " +
                     "WHERE id = ?;";
+        
+        if(p.getCount() > 200 || p.getCount() <3) return false;
+        
+        if(checkUniqueName(p) == false) {
+            System.out.println(p.getName());
+        }
+        
+        System.out.println(conn);
         PreparedStatement stm;
         try {
             stm = this.conn.prepareStatement(sql);
@@ -37,6 +44,7 @@ public class ProductServices {
             stm.setBigDecimal(4, p.getPrice());
             
             int kq = stm.executeUpdate();
+            System.out.println(kq);
             if (kq == 1) {
                 return true;
             }    
@@ -66,6 +74,10 @@ public class ProductServices {
     }
     
     public boolean insertProduct(Product product) throws SQLException{
+
+        if(product.getCount() > 200 || product.getCount() <3) return false;
+        if(!checkUniqueName(product)) return false;
+        
         String sql = "INSERT INTO product (name, category, origin, price, size, count) VALUES (?,?,?,?,?,?);";
         PreparedStatement stm = this.conn.prepareStatement(sql);
         
@@ -166,4 +178,21 @@ public class ProductServices {
         return listProduct;
     }
     
+    public boolean checkUniqueName(Product p) {
+        Boolean flag = true;
+        try {
+            ListProduct listProduct = getAllProduct();
+            for(Product pro: listProduct.getListProduct()) {
+                if((p.getName()).equals(pro.getName())) {
+                    flag = false;
+                    break;
+                }
+                    
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return flag;
+    }
 }
