@@ -31,6 +31,10 @@ public class OrderServices {
     
     public List<Order> getListOrders(String month, String year) {
         List<Order> listOrders = new ArrayList<>();
+        
+        if(Integer.parseInt(month) > 12 || Integer.parseInt(month) < 1) return null;
+        if(Integer.parseInt(year) < 1 ) return null;
+
         try {
             String sql = "SELECT * FROM order_detail where year(day_time) = ? and month(day_time) = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
@@ -49,7 +53,6 @@ public class OrderServices {
                     listOrders.add(o);
             }
             
-            
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrderServices.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,6 +62,8 @@ public class OrderServices {
     
     public List<Order> getListOrders(String year) {
         List<Order> listOrders = new ArrayList<>();
+        if(Integer.parseInt(year) < 1 ) return null;
+        
         try {
             String sql = "SELECT * FROM order_detail where year(day_time) = ?";
             PreparedStatement stm = conn.prepareStatement(sql);

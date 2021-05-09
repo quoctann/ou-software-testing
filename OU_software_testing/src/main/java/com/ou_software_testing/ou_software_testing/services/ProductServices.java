@@ -56,6 +56,8 @@ public class ProductServices {
     }
     
     public boolean deleleProductById(int productId) {
+        if(productId <= 0)
+            return false;
         String sql = "DELETE FROM product WHERE id = ?;";
         PreparedStatement stm;
         try {
@@ -73,12 +75,32 @@ public class ProductServices {
         return false;
     }
     
-    public boolean insertProduct(Product product) throws SQLException{
-
-        if(product.getCount() > 200 || product.getCount() <3) return false;
-        if(!checkUniqueName(product)) return false;
+    public boolean deleleProductByName(String name) {
+        if(name.length() <= 0)
+            return false;
+        String sql = "DELETE FROM product WHERE name = ?;";
+        PreparedStatement stm;
+        try {
+            stm = this.conn.prepareStatement(sql);
+            stm.setString(1, name);
         
-        String sql = "INSERT INTO product (name, category, origin, price, size, count) VALUES (?,?,?,?,?,?);";
+            int kq = stm.executeUpdate();
+            if (kq == 1) {
+                return true;
+            }    
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean insertProduct(Product product) throws SQLException{
+        if(product.getCount() > 200 || product.getCount() <3) return false;
+        if(checkUniqueName(product) == false) return false;
+        
+        String sql = "INSERT INTO product (name, category, origin, price, size, count) "
+                + "VALUES (?,?,?,?,?,?);";
         PreparedStatement stm = this.conn.prepareStatement(sql);
         
         stm.setString(1,product.getName());
@@ -93,6 +115,7 @@ public class ProductServices {
         if (kq == 1) {
             return true;
         }    
+        
         conn.close();
         return false;
     }

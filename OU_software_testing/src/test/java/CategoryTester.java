@@ -51,14 +51,6 @@ public class CategoryTester {
         
         Assertions.assertEquals(cates.size(), uniqueCates.size());
         
-//        for(int i = 0; i < names.size() - 1; i++){
-//            for(int k = i + 1; k < names.size(); k++){
-//                if(names.get(i).equals(names.get(k)) && sexs.get(i).equals(sexs.get(k)))
-//                    throw new Exception("Trùng loại sản phẩm");
-//                else
-//                    continue;
-//            }          
-//        }
     }
 
 
