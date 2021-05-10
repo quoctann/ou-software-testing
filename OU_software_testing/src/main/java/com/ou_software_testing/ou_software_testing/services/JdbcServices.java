@@ -5,6 +5,7 @@ import java.sql.*;
 
 public class JdbcServices {
     //Change the comment to your password and leave the first line
+//    private static String[] info = {"root", "123456789"};
     private static String[] info = {"root", "123456"};
 
     

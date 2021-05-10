@@ -5,10 +5,12 @@
  */
 package com.ou_software_testing.ou_software_testing.controller;
 
+import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Optional;
@@ -120,7 +122,8 @@ public class OrderMenuController extends ManageProductTableController{
     
     //switch to Payment controller which dont exist yet - dung
     @FXML 
-    private void onConfirmOrder() {
-        
+    private void onConfirmOrder() throws IOException {
+        DataTemporary.setListProductSelection(listProductOrder);
+        App.setRoot("notify_success_menu");
     }
 }

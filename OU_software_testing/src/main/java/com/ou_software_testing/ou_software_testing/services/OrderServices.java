@@ -29,8 +29,32 @@ public class OrderServices {
         this.conn = conn;
     }
     
+    public boolean addOrder(int product_id, int user_id, int payment_method, BigDecimal price, int count) {
+        try {
+            String sql = "insert into saledb.order_detail values (?,?,now(), ?,?,?)";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(1, product_id);
+            stm.setInt(2, user_id);
+            stm.setInt(3, payment_method);
+            stm.setBigDecimal(4, price);
+            stm.setInt(4, count);
+            
+            int kq = stm.executeUpdate();
+            if(kq == 1) return true;
+           
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public List<Order> getListOrders(String month, String year) {
         List<Order> listOrders = new ArrayList<>();
+        
+        if(Integer.parseInt(month) > 12 || Integer.parseInt(month) < 1) return null;
+        if(Integer.parseInt(year) < 1 ) return null;
+
         try {
             String sql = "SELECT * FROM order_detail where year(day_time) = ? and month(day_time) = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
@@ -49,7 +73,6 @@ public class OrderServices {
                     listOrders.add(o);
             }
             
-            
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrderServices.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,6 +82,8 @@ public class OrderServices {
     
     public List<Order> getListOrders(String year) {
         List<Order> listOrders = new ArrayList<>();
+        if(Integer.parseInt(year) < 1 ) return null;
+        
         try {
             String sql = "SELECT * FROM order_detail where year(day_time) = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
