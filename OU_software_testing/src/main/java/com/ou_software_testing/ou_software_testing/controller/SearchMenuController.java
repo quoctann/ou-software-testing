@@ -64,6 +64,10 @@ public class SearchMenuController extends ManageProductTableController{
         tb_search_product.getSelectionModel().setSelectionMode(
             SelectionMode.MULTIPLE
         );
+        if("user".equals(GlobalContext.getUser().getRole())) {
+            txt_quantity.setEditable(false);
+        }
+        
         tb_search_product.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
@@ -78,6 +82,7 @@ public class SearchMenuController extends ManageProductTableController{
                 txt_quantity.setText(String.valueOf(p.getCount()));
                 txt_pid.setText(String.valueOf(p.getId()));
                 txt_product_name.setText(p.getName());
+                txt_product_category.setText(String.valueOf(p.getCategory()));
                 txt_price.setText(p.getPrice().toString());
             }
         });
