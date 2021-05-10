@@ -54,7 +54,7 @@ CREATE TABLE `order_detail` (
   `payment_method` int NOT NULL,
   `price` decimal(19,2) DEFAULT NULL,
   `count` int DEFAULT '1',
-  PRIMARY KEY (`product_id`,`user_id`),
+  PRIMARY KEY (`product_id`,`user_id`,`day_time`),
   KEY `fk_customer_id_idx` (`user_id`),
   KEY `fk_payment_id_idx` (`payment_method`),
   CONSTRAINT `fk_customer_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
@@ -69,7 +69,7 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
-INSERT INTO `order_detail` VALUES (1,1,'2020-04-19 00:00:00',1,100.99,1),(1,2,'2020-06-29 00:00:00',1,380.29,3),(2,1,'2020-05-19 00:00:00',2,400.20,1);
+INSERT INTO `order_detail` VALUES (1,1,'2020-04-19 00:00:00',1,100.99,1),(1,2,'2020-06-29 00:00:00',1,380.29,3),(2,1,'2020-05-19 00:00:00',2,400.20,1),(3,2,'2021-05-10 20:35:11',1,100.00,1);
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ CREATE TABLE `product` (
   `count` int DEFAULT '1',
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_pro_cate` FOREIGN KEY (`id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'ao den1',2,'USA',5000.00,'XL',NULL,10),(2,'ao den2',1,'USA',500.00,'XL',NULL,6),(3,'ao den3',2,'VN',3.00,'M',NULL,200);
+INSERT INTO `product` VALUES (1,'ao den1',1,'USA',5000.00,'XL',NULL,8),(2,'ao den2',1,'USA',500.00,'XL',NULL,500),(3,'ao den3',2,'VN',3.00,'M',NULL,200);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,6 +161,31 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'saledb'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `checkProductCount` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkProductCount`(count_ int,productId int)
+BEGIN
+	SET @dbProductCount = (SELECT count from product where product.id = productId);
+    set @query =  'update product set count = ? where id = ?';
+    set @id = productId;
+	if @dbProductCount > 3 then
+		PREPARE stmt FROM @query;
+        execute stmt using @dbProductCount, @id;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -171,4 +196,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-09 15:32:14
+-- Dump completed on 2021-05-10 22:06:09
