@@ -5,9 +5,12 @@
  */
 package com.ou_software_testing.ou_software_testing.controller;
 
+import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
@@ -18,7 +21,11 @@ import javafx.scene.text.Text;
  */
 public class NotifySuccessMenuController extends Controller implements Initializable{
     @FXML private Text txt_order_price;
-
+    
+    @FXML
+    private void switchToMomopay(ActionEvent actionEvent) throws IOException {
+        App.setRoot("momopay");
+    }    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         txt_order_price.setText(DataTemporary.getListProductSelection().getTotalPrice().toString() + " đ");

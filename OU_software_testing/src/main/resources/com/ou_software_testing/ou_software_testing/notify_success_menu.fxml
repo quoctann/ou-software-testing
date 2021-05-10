@@ -16,7 +16,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane prefHeight="480.0" prefWidth="640.0" style="-fx-border-color: #A0EEC0; -fx-border-width: 3; -fx-border-radius: 5;" stylesheets="@style.css">
+      <GridPane prefHeight="480.0" prefWidth="640.0" style="-fx-border-color: #A0EEC0; -fx-border-width: 3; -fx-border-radius: 5;" stylesheets="@style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <columnConstraints>
             <ColumnConstraints maxWidth="130.0" minWidth="57.0" percentWidth="10.0" prefWidth="80.0" />
             <ColumnConstraints maxWidth="250.0" minWidth="63.0" prefWidth="260.0" />
@@ -55,7 +55,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btn_pay_momo" layoutX="106.0" layoutY="356.0" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Thanh toán MOMO" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Button fx:id="btn_pay_momo" layoutX="106.0" layoutY="356.0" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToMomopay" text="Thanh toán MOMO" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin>
