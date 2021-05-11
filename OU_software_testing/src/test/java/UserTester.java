@@ -12,7 +12,6 @@ public class UserTester {
     private final String password = "123";
     Connection conn;
     
-
     @Test
     public void testGetUser() throws SQLException {
         conn = JdbcServices.getConnection();

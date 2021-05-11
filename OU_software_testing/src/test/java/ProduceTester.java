@@ -152,7 +152,22 @@ public class ProduceTester {
         ListProduct rs = new ProductServices(conn).getProductByName("");
         Assertions.assertNotNull(rs);
     }
+    @Test
+    public void testReduceProductCount() throws SQLException {
+        Connection conn = JdbcServices.getConnection();
+        ProductServices productServices = new ProductServices(conn);
+        boolean rs = productServices.reduceProductCount(1,20);
+        Assertions.assertFalse(rs);
+    }
+    @Test
+    public void testReduceProductCount2() throws SQLException {
+        Connection conn = JdbcServices.getConnection();
+        ProductServices productServices = new ProductServices(conn);
+        boolean rs = productServices.reduceProductCount(1,1);
+        Assertions.assertTrue(rs);
+    }
     
+    //support functions
     private void deteleTest() {
         Connection conn = JdbcServices.getConnection();
         Boolean rs = new ProductServices(conn).deleleProductByName("ao den test");

@@ -37,12 +37,11 @@ public class OrderServices {
             stm.setInt(2, user_id);
             stm.setInt(3, payment_method);
             stm.setBigDecimal(4, price);
-            stm.setInt(4, count);
+            stm.setInt(5, count);
             
             int kq = stm.executeUpdate();
             if(kq == 1) return true;
            
-            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrderServices.class.getName()).log(Level.SEVERE, null, ex);
         }

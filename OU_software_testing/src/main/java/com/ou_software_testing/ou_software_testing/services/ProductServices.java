@@ -2,10 +2,12 @@ package com.ou_software_testing.ou_software_testing.services;
 
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,7 +60,7 @@ public class ProductServices {
     public boolean deleleProductById(int productId) {
         if(productId <= 0)
             return false;
-        String sql = "DELETE FROM product WHERE id = ?;";
+        String sql = "DELETE FROM product WHERE id = ?";
         PreparedStatement stm;
         try {
             stm = this.conn.prepareStatement(sql);
@@ -78,7 +80,7 @@ public class ProductServices {
     public boolean deleleProductByName(String name) {
         if(name.length() <= 0)
             return false;
-        String sql = "DELETE FROM product WHERE name = ?;";
+        String sql = "DELETE FROM product WHERE name = ?";
         PreparedStatement stm;
         try {
             stm = this.conn.prepareStatement(sql);
@@ -140,6 +142,30 @@ public class ProductServices {
             p.setPrice(rs.getBigDecimal("price"));
         }  
         conn.close();
+        return p;
+    }
+    
+    public Product getProductById (int productId, boolean disconnect) throws SQLException {
+        String sql = "SELECT * FROM product WHERE id = ?";
+        PreparedStatement stm = this.conn.prepareStatement(sql);
+        stm.setInt(1, productId);
+
+        Product p = new Product();
+        ResultSet rs = stm.executeQuery();
+        if (!rs.isBeforeFirst() ) {    
+            return null;
+        } 
+        if (rs.next()) {            
+            p.setId(rs.getInt("id"));
+            p.setName(rs.getString("name"));
+            p.setOrigin(rs.getString("origin"));
+            p.setSize(rs.getString("size"));
+            p.setCount(rs.getInt("count"));
+            p.setCategory(rs.getInt("category"));
+            p.setPrice(rs.getBigDecimal("price"));
+        }  
+        if(disconnect)
+            conn.close();
         return p;
     }
     
@@ -252,5 +278,26 @@ public class ProductServices {
         }
         
         return flag;
+    }
+
+    public boolean reduceProductCount(int productId, int count) {
+        try {
+            String sql = "update product set count = ? where id = ?";
+            
+            Product p_temp = getProductById(productId, false);
+            if((p_temp.getCount() - count) <= 3)
+                return false;
+            
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setInt(2, productId);
+            stm.setInt(1, (p_temp.getCount() - count));
+            
+            int kq = stm.executeUpdate();
+            return kq>0;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

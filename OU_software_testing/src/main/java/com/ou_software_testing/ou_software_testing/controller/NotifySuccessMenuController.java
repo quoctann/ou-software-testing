@@ -11,9 +11,20 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
 import com.ou_software_testing.ou_software_testing.Utils;
+import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
+import com.ou_software_testing.ou_software_testing.pojo.Product;
+import com.ou_software_testing.ou_software_testing.services.JdbcServices;
+import com.ou_software_testing.ou_software_testing.services.OrderServices;
+import com.ou_software_testing.ou_software_testing.services.ProductServices;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -32,6 +43,7 @@ public class NotifySuccessMenuController extends Controller implements Initializ
     @FXML private TextField txt_money_amount;
     @FXML private Button btn_pay, btn_pay_momo;
     @FXML private GridPane gp_count_excess;
+    private ListProduct ListProduct = DataTemporary.getListProductSelection();
     
     @FXML
     private void switchToMomopay(ActionEvent actionEvent) throws IOException {
@@ -39,7 +51,7 @@ public class NotifySuccessMenuController extends Controller implements Initializ
     }    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txt_order_price.setText(DataTemporary.getListProductSelection().getTotalPrice().toString());
+        txt_order_price.setText(ListProduct.getTotalPrice().toString());
         
         if(!"user".equals(GlobalContext.getUser().getRole())) {
             txt_money_amount.textProperty().addListener((ObservableValue<? extends String> ov, String t, String t1) -> {
@@ -52,16 +64,55 @@ public class NotifySuccessMenuController extends Controller implements Initializ
                     countExcessAmount();
                 }
             });
-
             btn_pay.setOnMouseClicked(event -> {
                 Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Ä�ang thá»±c hiá»‡n in hÃ³a Ä‘Æ¡n");
                 a.show();
             });
+            btn_pay.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    insertOrder(1);
+                }
+            });
         } else {
+            btn_pay.setText("Thanh toán khi nhận hàng");
             gp_count_excess.setDisable(true);
             gp_count_excess.setStyle("-fx-opacity: 0");
         }
-        
+    }
+    
+    @FXML
+    public void checkOutOrder() {
+        insertOrder(1);
+    }
+    
+    private void insertOrder(int payment_method) {
+        Connection conn;
+        String successString = "Order successful: \n", failString = "Order fail: \n";
+        try {
+            conn = JdbcServices.getConnection();
+            OrderServices orderServices = new OrderServices(conn);
+            ProductServices productServices = new ProductServices(conn);
+            for(Product p : ListProduct.getListProduct()) {
+                boolean kqr = productServices.reduceProductCount(p.getId(),p.getCount());
+                if(kqr) {
+                    boolean kq = orderServices.addOrder(p.getId(), GlobalContext.getUser().getId(), 
+                            payment_method, p.getPrice(), p.getCount());
+                    if(kq)  {
+                        successString += String.format("Success in ordering %s \n", p.getName());
+                    }  
+                }
+                else {
+                    failString += String.format("Failure in ordering %s \n", p.getName());
+                }
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(NotifySuccessMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Orders", "Result of ordering", 
+                String.format("%s \n ----- \n %s", successString,failString));
+        a.show();
     }
     
     @FXML 
@@ -75,10 +126,5 @@ public class NotifySuccessMenuController extends Controller implements Initializ
     private void countExcessAmount() {
         double amount = Double.parseDouble(txt_money_amount.getText()) - Double.parseDouble(txt_order_price.getText());
         txt_money_left.setText(String.format("%,.2f", amount));
-    }
-    
-    @FXML
-    public void onEnter(ActionEvent ae){
-       System.out.println("test-press enter") ;
     }
 }
