@@ -12,7 +12,14 @@ package com.ou_software_testing.ou_software_testing.pojo;
 public class CheckStatusTransaction {
     private String message;
     private int code;
+    private long amount;
 
+    public CheckStatusTransaction(String message, int code, long amount) {
+        this.message = message;
+        this.code = code;
+        this.amount = amount;
+    }
+    
     public CheckStatusTransaction(String message, int code) {
         this.message = message;
         this.code = code;
@@ -47,6 +54,20 @@ public class CheckStatusTransaction {
      */
     public void setCode(int code) {
         this.code = code;
+    }
+
+    /**
+     * @return the amount
+     */
+    public long getAmount() {
+        return amount;
+    }
+
+    /**
+     * @param amount the amount to set
+     */
+    public void setAmount(long amount) {
+        this.amount = amount;
     }
    
 }

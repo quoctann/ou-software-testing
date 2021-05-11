@@ -1,12 +1,5 @@
 package com.ou_software_testing.ou_software_testing.momopay;
 
-import com.mservice.allinone.models.PayGateResponse;
-import com.mservice.shared.constants.Parameter;
-import com.mservice.shared.exception.MoMoException;
-import com.mservice.shared.sharedmodels.AbstractProcess;
-import com.mservice.shared.sharedmodels.Environment;
-import com.mservice.shared.utils.Encoder;
-
 public class PaymentResult extends AbstractProcess<PayGateResponse, PayGateResponse>{
     public PaymentResult(Environment environment) {
         super(environment);
@@ -52,51 +45,13 @@ public class PaymentResult extends AbstractProcess<PayGateResponse, PayGateRespo
                 String message = "Success";
                 String localMessage = "Thành công";
 //                Xử lý kết quả thanh toán - Process Payment Result
-                       
-//        String orderType,                         
-//        String payType,                         
-//        Date responseDate
-                PayGateResponse responseIPNMoMo = new PayGateResponse(
-                        payGateResponse.getPartnerCode(), 
-                        payGateResponse.getOrderId(), 
-                        payGateResponse.getOrderInfo(), 
-                        payGateResponse.getAccessKey(),
-                        payGateResponse.getAmount(), 
-                        payGateResponse.getSignature(), 
-                        payGateResponse.getExtraData(), 
-                        payGateResponse.getRequestId(),
-                        payGateResponse.getNotifyUrl(),
-                        payGateResponse.getReturnUrl(),
-                        payGateResponse.getRequestType(),
-                        errorCode, message, localMessage, 
-                        payGateResponse.getTransId(),
-                        payGateResponse.getOrderType(),
-                        payGateResponse.getPayType(),
-                        payGateResponse.getResponseDate()
-                );
-                
+
+                PayGateResponse responseIPNMoMo = new PayGateResponse(payGateResponse.getPartnerCode(), payGateResponse.getAccessKey(), payGateResponse.getOrderId(), payGateResponse.getOrderInfo(), payGateResponse.getAmount(), payGateResponse.getSignature(), payGateResponse.getExtraData(), payGateResponse.getRequestId(),payGateResponse.getRequestType(),errorCode, message, localMessage, payGateResponse.getTransId());
+
                 return responseIPNMoMo;
             }
-            PayGateResponse responseIPNMoMo = new PayGateResponse(
-                    payGateResponse.getPartnerCode(), 
-                        payGateResponse.getOrderId(), 
-                        payGateResponse.getOrderInfo(), 
-                        payGateResponse.getAccessKey(),
-                        payGateResponse.getAmount(), 
-                        payGateResponse.getSignature(), 
-                        payGateResponse.getExtraData(), 
-                        payGateResponse.getRequestId(),
-                        payGateResponse.getNotifyUrl(),
-                        payGateResponse.getReturnUrl(),
-                        payGateResponse.getRequestType(),
-                        101, "Lỗi", "error", 
-                        payGateResponse.getTransId(),
-                        payGateResponse.getOrderType(),
-                        payGateResponse.getPayType(),
-                        payGateResponse.getResponseDate()
-                    );
+            PayGateResponse responseIPNMoMo = new PayGateResponse(payGateResponse.getPartnerCode(), payGateResponse.getAccessKey(), payGateResponse.getOrderId(), payGateResponse.getOrderInfo(), payGateResponse.getAmount(), payGateResponse.getSignature(), payGateResponse.getExtraData(), payGateResponse.getRequestId(),payGateResponse.getRequestType(),101, "error", "Lỗi", payGateResponse.getTransId());
 //          200 - Everything will be 200 Oke
-
             return responseIPNMoMo;
         } catch (Exception exception) {
             LogUtils.error("[Payment Result] " + exception);

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -158,8 +159,11 @@
             <Insets right="50.0" top="20.0" />
          </GridPane.margin>
       </Text>
-      <ImageView fx:id="image_QR" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-      <Button fx:id="refreshQRcode" mnemonicParsing="false" text="Refresh QR" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <ImageView fx:id="image_QR" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+         <image>
+            <Image url="@../../../qr-code-example.png" />
+         </image></ImageView>
+      <Button mnemonicParsing="false" onAction="#createQRcode" text="Refresh QR" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
@@ -167,7 +171,7 @@
             <Insets left="40.0" right="40.0" />
          </GridPane.margin>
       </Button>
-      <Button layoutX="1125.0" layoutY="478.0" minWidth="130.0" mnemonicParsing="false" text="Print" textFill="#24ab2d" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <Button fx:id="btn_print" disable="true" layoutX="1125.0" layoutY="478.0" minWidth="130.0" mnemonicParsing="false" text="Print" textFill="#24ab2d" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -193,6 +197,16 @@
                   <Font size="20.0" />
                </font>
             </Text>
+            <Label layoutX="30.0" layoutY="39.0" text="Amount paid:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Text fx:id="txt_amount_paid" layoutX="224.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
          </children>
          <padding>
             <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
@@ -206,7 +220,7 @@
             <Insets right="40.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="checkTransaction" layoutX="1120.0" layoutY="470.0" minWidth="130.0" mnemonicParsing="false" onAction="#cancelPay" text="Check" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+      <Button fx:id="checkTransaction" layoutX="1120.0" layoutY="470.0" minWidth="130.0" mnemonicParsing="false" onAction="#checkTransaction" text="Check" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
