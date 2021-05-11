@@ -43,7 +43,7 @@ public class MomoPay {
         
         QueryStatusTransactionResponse queryStatus = QueryStatusTransaction.process(
                 environment, orderId, orderId);
-        if (queryStatus == null) return true;
+        if (queryStatus == null || queryStatus.getErrorCode()==0) return true;
         return false;
     }
     

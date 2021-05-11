@@ -5,33 +5,33 @@
  */
 package com.ou_software_testing.ou_software_testing.controller;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
-import com.ou_software_testing.ou_software_testing.momopay.CaptureMoMo;
-import com.ou_software_testing.ou_software_testing.momopay.CaptureMoMoResponse;
-import com.ou_software_testing.ou_software_testing.momopay.Environment;
+import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.momopay.MomoPay;
-import com.ou_software_testing.ou_software_testing.pojo.CheckStatusTransaction;
+import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
+import com.ou_software_testing.ou_software_testing.pojo.Order;
+import com.ou_software_testing.ou_software_testing.pojo.Product;
+import com.ou_software_testing.ou_software_testing.services.JdbcServices;
+import com.ou_software_testing.ou_software_testing.services.OrderServices;
+import com.ou_software_testing.ou_software_testing.services.ProductServices;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -94,11 +94,34 @@ public class MomopayController extends ManageProductTableController{
     
     @FXML
     public void checkTransaction(ActionEvent actionEvent) throws Exception{
+        insertOrder(2);
         if (MomoPay.check(orderId)){
             txt_status.setText("Success");
             txt_status.setFill(Color.GREEN);
             txt_amount_paid.setText(amount);
             btn_print.setDisable(false);
+            
         }
+    }
+    private void insertOrder(int payment_method) {
+        String successString = "Order successful: \n", failString = "Order fail: \n";
+        try {
+            Connection conn = JdbcServices.getConnection();
+            OrderServices orderServices = new OrderServices(conn);
+            
+            List<Order> listOrder = new ArrayList<>();
+            
+            for (Product p : listProduct.getListProduct()) {
+                listOrder.add(new Order(p.getCount(), 1, p.getId(), 
+                        GlobalContext.getUser().getId(), p.getPrice()));
+            }
+            orderServices.insertOrder(listOrder);
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(NotifySuccessMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Orders", "Result of ordering", 
+                String.format("%s \n ----- \n %s", successString,failString));
+        a.show();
     }
 }
