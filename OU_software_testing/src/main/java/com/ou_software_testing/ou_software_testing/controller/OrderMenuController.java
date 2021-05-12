@@ -51,11 +51,11 @@ public class OrderMenuController extends ManageProductTableController{
             if(p != null) {
                 btn_adjust.setDisable(false);
                 btn_delete.setDisable(false);
+                txt_quantity.setText(String.valueOf(p.getCount()));
             } else {
                 btn_adjust.setDisable(true);
                 btn_delete.setDisable(true);
             }
-            txt_quantity.setText(String.valueOf(p.getCount()));
         });
     }
     
@@ -88,6 +88,20 @@ public class OrderMenuController extends ManageProductTableController{
     private void onAdjust() {
         int quantity = Integer.parseInt(txt_quantity.getText());
         int productCount = getProductByID(tb_orders.getSelectionModel().getSelectedItem().getId()).getCount();
+        if(quantity <= 0) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin","Nhập sai thông tin số lượng", "Vui lòng nhập lại thông tin số lượng đúng.");
+            a.show();
+            return;
+        }
+        if((productCount - quantity) < 3 ) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
+                "Nhập sai thông tin số lượng", "Số lượng hàng trong kho sau khi đặt phải lớn hơn 3.\n"
+                        + "Số lượng hàng trong kho sau khi đặt là " +  
+                        String.valueOf(productCount - quantity)
+                        + ".\n Vui lòng nhập lại thông tin số lượng đúng.");
+            a.show();
+            return;
+        }
         if(quantity > 0 &&  quantity <= productCount ) { 
             
             for(Product p: listProductOrder.getListProduct()) {

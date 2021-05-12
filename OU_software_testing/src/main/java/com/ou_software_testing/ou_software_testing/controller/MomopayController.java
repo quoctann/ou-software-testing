@@ -9,12 +9,10 @@ import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
 import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.momopay.MomoPay;
-import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Order;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import com.ou_software_testing.ou_software_testing.services.JdbcServices;
 import com.ou_software_testing.ou_software_testing.services.OrderServices;
-import com.ou_software_testing.ou_software_testing.services.ProductServices;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,8 +92,8 @@ public class MomopayController extends ManageProductTableController{
     
     @FXML
     public void checkTransaction(ActionEvent actionEvent) throws Exception{
-        insertOrder(2);
         if (MomoPay.check(orderId)){
+            insertOrder(2);
             txt_status.setText("Success");
             txt_status.setFill(Color.GREEN);
             txt_amount_paid.setText(amount);
@@ -104,7 +102,6 @@ public class MomopayController extends ManageProductTableController{
         }
     }
     private void insertOrder(int payment_method) {
-        String successString = "Order successful: \n", failString = "Order fail: \n";
         try {
             Connection conn = JdbcServices.getConnection();
             OrderServices orderServices = new OrderServices(conn);
@@ -121,7 +118,7 @@ public class MomopayController extends ManageProductTableController{
             Logger.getLogger(NotifySuccessMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Orders", "Result of ordering", 
-                String.format("%s \n ----- \n %s", successString,failString));
+                "Order successful");
         a.show();
     }
 }

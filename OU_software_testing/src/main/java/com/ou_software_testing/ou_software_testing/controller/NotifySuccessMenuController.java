@@ -16,7 +16,6 @@ import com.ou_software_testing.ou_software_testing.pojo.Product;
 import com.ou_software_testing.ou_software_testing.services.JdbcServices;
 import com.ou_software_testing.ou_software_testing.services.OrderServices;
 import com.ou_software_testing.ou_software_testing.services.ProductServices;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -54,18 +53,21 @@ public class NotifySuccessMenuController extends Controller implements Initializ
         txt_order_price.setText(ListProduct.getTotalPrice().toString());
         
         if(!"user".equals(GlobalContext.getUser().getRole())) {
-            txt_money_amount.textProperty().addListener((ObservableValue<? extends String> ov, String t, String t1) -> {
-            if(!t1.matches("\\d*"))  {
-                txt_money_amount.setText(t1.replaceAll("[^\\d]", ""));
-            }
+            txt_money_amount.textProperty()
+                    .addListener((ObservableValue<? extends String> ov, String t, String t1) -> {
+                if(!t1.matches("\\d*"))  {
+                    txt_money_amount.setText(t1.replaceAll("[^\\d]", ""));
+                    System.out.println(txt_money_amount.getText());
+                }
             });
             txt_money_amount.setOnKeyPressed( event -> {
+                checkIfNumber();
                 if(event.getCode() == KeyCode.ENTER) {
                     countExcessAmount();
                 }
             });
             btn_pay.setOnMouseClicked(event -> {
-                Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Ä�ang thá»±c hiá»‡n in hÃ³a Ä‘Æ¡n");
+                Alert a = Utils.makeAlert(Alert.AlertType.INFORMATION, "Đang in hóa đơn");
                 a.show();
             });
             btn_pay.setOnAction(new EventHandler<ActionEvent>() {
