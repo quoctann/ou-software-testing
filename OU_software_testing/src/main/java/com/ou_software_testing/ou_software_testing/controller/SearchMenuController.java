@@ -4,10 +4,17 @@ import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
 import com.ou_software_testing.ou_software_testing.Utils;
+import com.ou_software_testing.ou_software_testing.pojo.Category;
+import com.ou_software_testing.ou_software_testing.pojo.ListCategory;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
+import com.ou_software_testing.ou_software_testing.services.CategoryServices;
+import com.ou_software_testing.ou_software_testing.services.JdbcServices;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +45,7 @@ public class SearchMenuController extends ManageProductTableController{
     
     private ListProduct listProductsOrders = DataTemporary.getListProductSelection();
     private ListProduct listChoose = new ListProduct();
+    private ListCategory listCategory;
     ObservableList<TablePosition> selectedCells = FXCollections.observableArrayList();
     
     @FXML
@@ -58,6 +66,7 @@ public class SearchMenuController extends ManageProductTableController{
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize(url, rb); //To change body of generated methods, choose Tools | Templates.
         
+        getCategoryList();
         tb_search_product.getSelectionModel().setSelectionMode(
             SelectionMode.MULTIPLE
         );
@@ -76,7 +85,7 @@ public class SearchMenuController extends ManageProductTableController{
                 txt_quantity.setText("1");
                 txt_pid.setText(String.valueOf(p.getId()));
                 txt_product_name.setText(p.getName());
-                txt_product_category.setText(String.valueOf(p.getCategory()));
+                txt_product_category.setText(listCategory.getNameById(p.getCategory()));
                 txt_price.setText(p.getPrice().toString());
             }
         });
@@ -125,7 +134,7 @@ public class SearchMenuController extends ManageProductTableController{
         if(listProductsOrders.getListProduct().size() <= 0) {
             rs = listProductsOrders.addProduct(p);
             getNotify(rs);
-        } else { 
+        } else {
             for (Product pro: listProductsOrders.getListProduct()) {
                 if(pro.getId() == p.getId())  {
                     pro.setCount(pro.getCount() + count);
@@ -164,5 +173,16 @@ public class SearchMenuController extends ManageProductTableController{
                     "Error", "Order fail, please check products list");
         
         a.show();
+    }
+    
+    private void getCategoryList() {
+        try {
+            Connection conn = JdbcServices.getConnection();
+            CategoryServices categoryServices = new CategoryServices(conn);
+            listCategory.setListCategory(categoryServices.getCategorys());
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

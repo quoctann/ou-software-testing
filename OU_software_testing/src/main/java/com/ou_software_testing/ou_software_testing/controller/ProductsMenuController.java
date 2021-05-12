@@ -1,5 +1,6 @@
 package com.ou_software_testing.ou_software_testing.controller;
 
+import com.ou_software_testing.ou_software_testing.Rule;
 import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.Category;
 import com.ou_software_testing.ou_software_testing.pojo.ListCategory;
@@ -50,8 +51,12 @@ public class ProductsMenuController extends ManageProductTableController{
         } else if (txt_price.getText().isEmpty()) {
             Utils.makeAlert(Alert.AlertType.ERROR, "Chưa nhập đơn giá, vui lòng nhập lại").show();
             return;
-        } else if (Integer.parseInt(txt_quantity.getText()) < 3 || Integer.parseInt(txt_quantity.getText()) > 200 ) {
-            Utils.makeAlert(Alert.AlertType.ERROR, "số lượng sản phẩm phải trong khoảng từ 3 tới 200, vui lòng nhập lại").show();
+        } else if (Integer.parseInt(txt_quantity.getText()) < Rule.getMIN_PRODUCT() || Integer.parseInt(txt_quantity.getText()) > Rule.getMAX_PRODUCT() ) {
+            Utils.makeAlert(Alert.AlertType.ERROR, 
+                    String.format("số lượng sản phẩm phải trong khoảng từ %d tới %d, vui lòng nhập lại", 
+                            Rule.getMIN_PRODUCT(),
+                            Rule.getMAX_PRODUCT()
+                    )).show();
             return;
         } else if (txt_pid.getText().isEmpty()) {
             Utils.makeAlert(Alert.AlertType.ERROR, "Chưa nhập id sản phẩm, vui lòng nhập lại").show();

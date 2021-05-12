@@ -1,5 +1,6 @@
 package com.ou_software_testing.ou_software_testing.services;
 
+import com.ou_software_testing.ou_software_testing.Rule;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import java.sql.Connection;
@@ -97,7 +98,7 @@ public class ProductServices {
     
     public boolean insertProduct(Product product) throws SQLException{
         if(product.getCount() > 200 || product.getCount() <3) return false;
-        if(checkUniqueName(product) == false) return false;
+        if(Rule.isIS_SAME_PRODUCT_NAME() && checkUniqueName(product) == false) return false;
         
         String sql = "INSERT INTO product (name, category, origin, price, size, count) "
                 + "VALUES (?,?,?,?,?,?);";

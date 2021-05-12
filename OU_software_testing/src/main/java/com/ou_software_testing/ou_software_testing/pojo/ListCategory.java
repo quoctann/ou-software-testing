@@ -17,6 +17,10 @@ public class ListCategory {
     public ListCategory() {
     }
     
+    public String getNameById(int id){
+        return getCategoryById(id).getName();
+    }
+    
     public List<String> getListCategoryName(){
         List<String> list = new ArrayList<>();
         for (Category cate: getListCategory()){
