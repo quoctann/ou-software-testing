@@ -8,9 +8,7 @@ import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ResourceBundle;
@@ -20,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TablePosition;
@@ -64,6 +61,7 @@ public class SearchMenuController extends ManageProductTableController{
         tb_search_product.getSelectionModel().setSelectionMode(
             SelectionMode.MULTIPLE
         );
+        
         tb_search_product.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
@@ -75,9 +73,10 @@ public class SearchMenuController extends ManageProductTableController{
                 for (int i = 0; i < list.size(); i++)
                     listChoose.addProduct(list.get(i));
 
-                txt_quantity.setText(String.valueOf(p.getCount()));
+                txt_quantity.setText("1");
                 txt_pid.setText(String.valueOf(p.getId()));
                 txt_product_name.setText(p.getName());
+                txt_product_category.setText(String.valueOf(p.getCategory()));
                 txt_price.setText(p.getPrice().toString());
             }
         });
@@ -95,7 +94,18 @@ public class SearchMenuController extends ManageProductTableController{
             a.show();
             return;
         }
-        if( count > p.getCount() || count <= 0 )  {
+        if(count <= 0) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin","Nhập sai thông tin số lượng", "Vui lòng nhập lại thông tin số lượng đúng.");
+            a.show();
+            return;
+        }
+        if((p.getCount() - count) < 3 ) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
+                "Nhập sai thông tin số lượng", "Số lượng hàng trong kho sau khi đặt phải lớn hơn 3. Vui lòng nhập lại thông tin số lượng đúng.");
+            a.show();
+            return;
+        }
+        if( count > p.getCount() )  {
             Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
                     "Nhập sai thông tin số lượng", "Vui lòng nhập lại thông tin số lượng đúng");
             a.show();
