@@ -72,6 +72,7 @@ public class MomopayController extends ManageProductTableController{
     @FXML
     public void createQRcode(){
         orderId = String.valueOf(System.currentTimeMillis());
+        txt_orderId.setText(orderId);
         String URL = "https://google.com.vn";
         
         try {
