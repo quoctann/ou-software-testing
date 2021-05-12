@@ -45,7 +45,7 @@ public class SearchMenuController extends ManageProductTableController{
     
     private ListProduct listProductsOrders = DataTemporary.getListProductSelection();
     private ListProduct listChoose = new ListProduct();
-    private ListCategory listCategory;
+    private ListCategory listCategory = new ListCategory();
     ObservableList<TablePosition> selectedCells = FXCollections.observableArrayList();
     
     @FXML
@@ -179,7 +179,8 @@ public class SearchMenuController extends ManageProductTableController{
         try {
             Connection conn = JdbcServices.getConnection();
             CategoryServices categoryServices = new CategoryServices(conn);
-            listCategory.setListCategory(categoryServices.getCategorys());
+            List<Category> list = categoryServices.getCategorys();
+            listCategory.setListCategory(list);
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(ProductsMenuController.class.getName()).log(Level.SEVERE, null, ex);

@@ -18,7 +18,8 @@ public class ListCategory {
     }
     
     public String getNameById(int id){
-        return getCategoryById(id).getName();
+        Category c = getCategoryById(id);
+        return c.getName() + " " +c.getSex() ;
     }
     
     public List<String> getListCategoryName(){
