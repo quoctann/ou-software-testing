@@ -209,7 +209,7 @@
                                     <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                                  </GridPane.margin>
                               </ComboBox>
-                              <TextField fx:id="txt_quantity" text="1" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <TextField fx:id="txt_quantity" promptText="Enter count here" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                                  </GridPane.margin>
@@ -217,7 +217,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </TextField>
-                              <TextField fx:id="txt_price" layoutX="137.0" layoutY="179.0" text="1.000.000" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <TextField fx:id="txt_price" layoutX="137.0" layoutY="179.0" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
