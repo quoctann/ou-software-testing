@@ -67,7 +67,7 @@ public class SellMenuController extends Controller{
             Product product = productServices.getProductById(Integer.parseInt(pid));
             if (product == null)
                 return;
-            if (product.getCount() - Utils.ParseIntWithTryCatch(quantity) <= 3){
+            if (product.getCount() - Utils.ParseIntWithTryCatch(quantity) < 3){
                 Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
                 "Nhập sai thông tin số lượng", "Số lượng hàng trong kho sau khi đặt phải lớn hơn 3. Vui lòng nhập lại thông tin số lượng đúng.");
                 a.show();

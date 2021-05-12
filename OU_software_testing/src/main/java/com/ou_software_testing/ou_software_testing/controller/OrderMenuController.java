@@ -5,6 +5,7 @@
  */
 package com.ou_software_testing.ou_software_testing.controller;
 
+import com.mysql.cj.util.Util;
 import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
@@ -91,6 +92,12 @@ public class OrderMenuController extends ManageProductTableController{
     
     @FXML
     private void onAdjust() {
+        if (Utils.ParseIntWithTryCatch(txt_quantity.getText())== -1){
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
+                    "Nhập sai thông tin số lượng", "Vui lòng nhập đúng định dạng số");
+            a.show();
+            return;
+        }
         int quantity = Integer.parseInt(txt_quantity.getText());
         Product product = tb_orders.getSelectionModel().getSelectedItem();
         int totalProduct = product.getTotalProduct();
@@ -99,6 +106,7 @@ public class OrderMenuController extends ManageProductTableController{
             a.show();
             return;
         }
+        
         if((totalProduct - quantity) < 3 ) {
             Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
                 "Nhập sai thông tin số lượng", "Số lượng hàng trong kho sau khi đặt phải lớn hơn 3.\n"
