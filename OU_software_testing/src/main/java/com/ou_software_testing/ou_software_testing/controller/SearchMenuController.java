@@ -100,6 +100,7 @@ public class SearchMenuController extends ManageProductTableController{
             return;
         }
         if((p.getCount() - count) < 3 ) {
+            p = tb_search_product.getSelectionModel().getSelectedItem();
             Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
                 "Nhập sai thông tin số lượng", "Số lượng hàng trong kho sau khi đặt phải lớn hơn 3. Vui lòng nhập lại thông tin số lượng đúng.");
             a.show();
@@ -111,8 +112,15 @@ public class SearchMenuController extends ManageProductTableController{
             a.show();
             return;
         }
+        if(listProductsOrders.getListProduct().size() >= 5) {
+            Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
+                    "Quá số lượng sản phẩm đặt cho phép", "Số lượng sản phẩm cho phép đặt trong một lần là 5");
+            a.show();
+            return;
+        }
         
         boolean rs  = false;
+        int oldCount = p.getCount();
         p.setCount(count);
         if(listProductsOrders.getListProduct().size() <= 0) {
             rs = listProductsOrders.addProduct(p);
@@ -128,7 +136,7 @@ public class SearchMenuController extends ManageProductTableController{
                 getNotify(rs);
             }
         }
-        
+        p.setCount(oldCount);
         
     }
     
