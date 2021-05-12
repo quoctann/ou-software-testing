@@ -9,7 +9,10 @@ module com.ou_software_testing.ou_software_testing {
     requires commons.codec;
     requires okhttp3;
     requires okio;
-    
+    requires org.kordamp.ikonli.core;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.fontawesome;
+
     opens com.ou_software_testing.ou_software_testing to javafx.fxml;
     exports com.ou_software_testing.ou_software_testing;
 }
