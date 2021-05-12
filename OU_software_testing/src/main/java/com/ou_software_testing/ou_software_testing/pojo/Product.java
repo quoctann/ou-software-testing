@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 public class Product {
     private String name, origin, size;
-    private int count, id, category;
+    private int count, id, category, totalProduct;
     private BigDecimal price;
     
     public Product(){};
@@ -130,5 +130,19 @@ public class Product {
      */
     public void setCategory(int category) {
         this.category = category;
+    }
+
+    /**
+     * @return the totalProduct
+     */
+    public int getTotalProduct() {
+        return totalProduct;
+    }
+
+    /**
+     * @param totalProduct the totalProduct to set
+     */
+    public void setTotalProduct(int totalProduct) {
+        this.totalProduct = totalProduct;
     }
 }

@@ -3,6 +3,7 @@ package com.ou_software_testing.ou_software_testing.controller;
 import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
+import com.ou_software_testing.ou_software_testing.Rule;
 import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.Category;
 import com.ou_software_testing.ou_software_testing.pojo.ListCategory;
@@ -121,31 +122,34 @@ public class SearchMenuController extends ManageProductTableController{
             a.show();
             return;
         }
-        if(listProductsOrders.getListProduct().size() >= 5) {
+        if(listProductsOrders.getListProduct().size() >= Rule.getMAX_PRODUCT_ORDER()) {
             Alert a = Utils.makeAlert(Alert.AlertType.ERROR, "Nhập sai thông tin", 
-                    "Quá số lượng sản phẩm đặt cho phép", "Số lượng sản phẩm cho phép đặt trong một lần là 5");
+                    "Quá số lượng sản phẩm đặt cho phép", "Số lượng sản phẩm cho phép đặt trong một lần là " 
+                            + String.valueOf(Rule.getMAX_PRODUCT_ORDER()));
             a.show();
             return;
         }
+        DataTemporary.getListProductSelection().addProduct(p);
+        DataTemporary.getListProductSelection().getProductById(p.getId()).setTotalProduct(p.getCount());
+        DataTemporary.getListProductSelection().getProductById(p.getId()).setCount(count);
         
-        boolean rs  = false;
-        int oldCount = p.getCount();
-        p.setCount(count);
-        if(listProductsOrders.getListProduct().size() <= 0) {
-            rs = listProductsOrders.addProduct(p);
-            getNotify(rs);
-        } else {
-            for (Product pro: listProductsOrders.getListProduct()) {
-                if(pro.getId() == p.getId())  {
-                    pro.setCount(pro.getCount() + count);
-                    getNotify(true);
-                    return;
-                }
-                rs = listProductsOrders.addProduct(p);
-                getNotify(rs);
-            }
-        }
-        p.setCount(oldCount);
+//        boolean rs  = false;
+//        int oldCount = p.getCount();
+//        if(listProductsOrders.getListProduct().size() <= 0) {
+//            rs = listProductsOrders.addProduct(p);
+//            getNotify(rs);
+//        } else {
+//            for (Product pro: listProductsOrders.getListProduct()) {
+//                if(pro.getId() == p.getId())  {
+//                    pro.setCount(pro.getCount() + count);
+//                    getNotify(true);
+//                    return;
+//                }
+//                rs = listProductsOrders.addProduct(p);
+//                getNotify(rs);
+//            }
+//        }
+//        p.setCount(oldCount);
         
     }
     
