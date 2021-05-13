@@ -5,7 +5,6 @@
  */
 package com.ou_software_testing.ou_software_testing.controller;
 
-import com.mysql.cj.util.Util;
 import com.ou_software_testing.ou_software_testing.App;
 import com.ou_software_testing.ou_software_testing.DataTemporary;
 import com.ou_software_testing.ou_software_testing.GlobalContext;
@@ -13,12 +12,9 @@ import com.ou_software_testing.ou_software_testing.Rule;
 import com.ou_software_testing.ou_software_testing.Utils;
 import com.ou_software_testing.ou_software_testing.pojo.ListProduct;
 import com.ou_software_testing.ou_software_testing.pojo.Product;
-import com.ou_software_testing.ou_software_testing.services.JdbcServices;
-import com.ou_software_testing.ou_software_testing.services.ProductServices;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
