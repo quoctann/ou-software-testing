@@ -4,7 +4,7 @@ A mid course excercise of Software Testing subject. This course is organized by 
 
 Members:
 - Trần Quốc Tấn [Link github](https://github.com/quoctann)
-- Phạm Thị Thu Uyên [Link github](https://github.com/uyennguyen0721)
+- Nguyễn Thị Thu Uyên [Link github](https://github.com/uyennguyen0721)
 - Ngô Văn Hậu [Link github](https://github.com/haungo2109)
 - Lý Quốc Dũng [Link github](https://github.com/CosmicFishi)
 
